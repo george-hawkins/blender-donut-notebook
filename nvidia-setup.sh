@@ -9,11 +9,11 @@ echo 'options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFileP
 
 cd /usr/share/doc/nvidia-driver-460
 
-sudo install nvidia-suspend.service /etc/systemd/system
-sudo install nvidia-hibernate.service /etc/systemd/system
-sudo install nvidia-resume.service /etc/systemd/system
-sudo install nvidia /lib/systemd/system-sleep
-sudo install nvidia-sleep.sh /usr/bin
+sudo cp nvidia-suspend.service /etc/systemd/system
+sudo cp nvidia-hibernate.service /etc/systemd/system
+sudo cp nvidia-resume.service /etc/systemd/system
+sudo cp nvidia /lib/systemd/system-sleep
+sudo cp nvidia-sleep.sh /usr/bin
 
 sudo systemctl enable nvidia-suspend.service
 sudo systemctl enable nvidia-hibernate.service

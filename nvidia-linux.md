@@ -81,6 +81,33 @@ Oddly, the power management features for the Nvidia driver are not installed by 
 
 I distilled those instructions into the script found here as [nvidia-setup.sh](nvidia-setup.sh). Make sure to edit this script first and adjust `nvidia-driver-460` to match your current driver version.
 
+Note: the `README` suggest using `install` to copy over the `.service` files but this results in them being marked as executable - which then results in these errors in `syslog`:
+
+```
+May 10 21:07:15 my-machine systemd[1]: Configuration file /etc/systemd/system/nvidia-resume.service is marked executable. Please remove executable permission bits. Proceeding anyway.
+```
+
+So I use `cp` instead.
+
 For more helpful details see <https://wiki.archlinux.org/title/NVIDIA/Tips_and_tricks>
 
 You can also find the `README` in HTML form in the `README` subdirectory of your driver version at <https://download.nvidia.com/XFree86/Linux-x86_64/>
+
+### Update
+
+Doing all this resulted in the card not restarting properly from suspend - oddly, it seemed to work but would then fail if left overnight.
+
+In `/var/log/syslog` (and `kern.log`) show:
+
+```
+May 10 19:52:11 my-machine kernel: [ 6704.979652] pcieport 0000:00:1c.0: Data Link Layer Link Active not set in 1000 msec
+May 10 19:52:11 my-machine kernel: [ 6704.979654] pcieport 0000:00:1c.0: pciehp: Failed to check link status
+May 10 19:52:21 my-machine kernel: [ 6715.731756] ------------[ cut here ]------------
+May 10 19:52:21 my-machine kernel: [ 6715.731871] WARNING: CPU: 3 PID: 8964 at /var/lib/dkms/nvidia/460.73.01/build/nvidia/nv.c:3826 nv_restore_user_channels+0xce/0xe0 [nvidia]
+```
+
+The Arch wiki (linked to above) suggests disabling the `nvidia-resume.service` (installed by the `nvidia-setup.sh` script above) but the problem seems to occur before this service even gets to run.
+
+However, I've disabled it - let's see if it makes any difference:
+
+    $ sudo systemctl disable nvidia-resume.service

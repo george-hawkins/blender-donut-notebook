@@ -1,9 +1,9 @@
 Blender donut tutorial notebook
 ===============================
 
-This is the notebook I wrote while following Blender Guru's [Blender Beginner Tutorial Series](https://www.youtube.com/watch?v=TPrnSACiTJ4&list=PLjEaoINr3zgEq0u2MzVgAaHEBt--xLB6U).
+This is the notebook I wrote while following Blender Guru's [Blender Beginner Tutorial Series](https://www.youtube.com/watch?v=TPrnSACiTJ4&list=PLjEaoINr3zgEq0u2MzVgAaHEBt--xLB6U). Along with lots of notes taken staight from the videos, it includes the various things that I got confused about and how I resoved those issues.
 
-To download the latest version of Blender go to the Blender [download page](https://www.blender.org/download/).
+To get the latest version of Blender go to the Blender [download page](https://www.blender.org/download/).
 
 I used Blender version 2.92 while the videos use version one of the 2.8 series of releases (see [here](https://www.blender.org/download/releases/) for the release history) so things look a little different between the two.
 
@@ -179,6 +179,8 @@ If you `tab` back into _Object Mode_, it's interesting to see how the bottom edg
 ![img.png](icing-edge.png)
 
 At around 9:36 in the video, he starts talking about setting the _Clip Start_ value if Blender clips your donut strangely when you zoom in and out. You do this by pressing `n` to pop out the side menu, going to _View_ and adjusting the _Clip Start_ value down to 0.01m. However, in my version of Blender it'd already defaulted to this value and I didn't need to adjust it.
+
+Aside: you can pop the side menu back in with `n` again - it took me a while to work out how you can do this, if you want, with the mouse. If you go to the left edge of the menu, you'll see a horizontal resize cursor - if you click now, you can drag the menu until it's hidden. There are various other menus that also work like this - there's a tiny arrow to show their presense when hidden which can be clicked to expand them but no obvious corresponding element to hide them again.
 
 ![img.png](clip-start.png)
 
