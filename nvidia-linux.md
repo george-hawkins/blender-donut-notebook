@@ -111,3 +111,48 @@ The Arch wiki (linked to above) suggests disabling the `nvidia-resume.service` (
 However, I've disabled it - let's see if it makes any difference:
 
     $ sudo systemctl disable nvidia-resume.service
+
+Poor performance after resuming from suspend
+--------------------------------------------
+
+I haven't experienced this but the Arch Wiki has a section on resolving [_Poor performance after resuming from suspend_](https://wiki.archlinux.org/title/NVIDIA/Troubleshooting#Poor_performance_after_resuming_from_suspend) - it involves more kernel module options.
+
+Manually reloading the Nvidia driver after wake from suspend
+------------------------------------------------------------
+
+An alternative to the above is to manually reload one or more of the Nvidia kernel modules as described [here](https://forums.fast.ai/t/cuda-lib-not-working-after-suspend-on-ubuntu-16-04/3546).
+
+I.e. you just do:
+
+    $ sudo rmmod nvidia_uvm
+    $ sudo modprobe nvidia_uvm
+
+I found that this worked but that Blender wasn't entirely happy afterward - I had to quit and restart a few times combined with repeating the above steps before things settled down.
+
+As noted in the link above, you could combine these steps into a script that's run when the system wakes - but it's a rather blunt tool - I suspect any application may be unhappy at this happening while its running.
+
+You can find scripts, like this [one](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-340419774), that get around this by killing all processes using the Nvidia drvier _before_ going to sleep. But this will only really work if you've got a GPU dedicated to CUDA. In my setup, the GPU is also handling X:
+
+    $ nvidia-smi pmon -c 1
+    # gpu        pid  type    sm   mem   enc   dec   command
+    # Idx          #   C/G     %     %     %     %   name
+        0        949     G     -     -     -     -   Xorg           
+        0       1644     G     -     -     -     -   gnome-shell    
+        0       8617     G     -     -     -     -   chrome --type=g
+        0      13278     G     -     -     -     -   jcef_helper --t
+        0      15187     G     -     -     -     -   blender
+
+I found that just reloading `nvidia_uvm` (as above) worked but others reloaded more modules, the key _seems_ to be to remove the ones with zero use count:
+
+    $ lsmod | fgrep nvidia
+    nvidia_uvm           1019904  0
+    nvidia_drm             57344  6
+    nvidia_modeset       1228800  9 nvidia_drm
+    nvidia              34127872  397 nvidia_uvm,nvidia_modeset
+    drm_kms_helper        217088  1 nvidia_drm
+    drm                   552960  9 drm_kms_helper,nvidia_drm
+    i2c_nvidia_gpu         16384  0
+
+I.e. `nvidia_uvm` and `i2c_nvidia_gpu` here, then rerun `lsmod` and see which of the remaining have now also got a zero use count and repeat the process until all our unloaded and then reload them in the reverse order.
+
+Others have had luck with different subsets, e.g. see [here](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-301058363), [here](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-304442181) and [here](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-312679773). But note these comments are on a Tensorflow thread where people may not be so interested in keeping the display alive if the card is also being used for it.

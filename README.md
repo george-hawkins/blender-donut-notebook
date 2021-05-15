@@ -316,7 +316,12 @@ Now, switch from _Layout_ to _Sculpting_ (see buttons with these names in the ma
 
 Zoom in on the donut and press `f` whenever you want to adjust the size of your brush. You'll see the tool settings (_SculptDraw_ etc.) just below the main menu bar (unlike the video, these now appear automatically in the 2.9 versions of Blender and also, unlike the video, x-symmetry is not automatically selected).
 
-Note: you can see he often increases and decreases values via the scroll wheel - to do this hover over the setting, e.g. sculpt _Strength_ and hold `ctrl` while turning the scroll wheel.
+Instead of clicking and releasing to select a field and enter a value, you can:
+
+* Hover over the field, click but don't release and drag left and right.
+* For more fine-grained control, hover over the field and hold `ctrl` while turning the scroll wheel.
+
+Try these with e.g. the sculpt _Strength_.
 
 Try pulling out the surface by dragging back and forward on the donut surface, `tab` to edit mode and pan around to see how it looks then undo.
 
@@ -437,6 +442,8 @@ Above, you can see _Device_ is set to _CPU_. If you've got a decent graphics car
 
 If you've got a super new Nvidia RTX graphics card then it should be selected under the OptiX tab rather than _CUDA_ and if you've got an AMD graphics card then it should be selected under _OpenCL_.
 
+**Update:** I eventually bought an RTX card and initially didn't have it chosen under the OptiX tab. Switching to OptiX had a dramatic positive effect on my render times but the first time I did a render, I thought Blender had hung. Instead of rending, it sat and did nothing but if you look closely, in the render window, you can see the text "Loading render kernels (may take a few minutes the first time)". It took less than a minute, for me, and more than made up for it in render speed afterwards.
+
 If you haven't got either an Nvivida or an AMD graphics card then you just have to use _CPU_. My cheap Nvidia GT 730 card is barely faster than _CPU_ anyway.
 
 Aside: I experienced issues, on my Ubuntu system, with CUDA disappearing after waking from suspend - there are notes on this and on installing the latest Nvidia driver in [`nvidia-linux.md`](nvidia-linux.md).
@@ -483,6 +490,8 @@ Or you can press `n` to pop out the side menu, select the _View_ tab and tick _C
 
 Both of these approaches seem much easier than using `g` etc.
 
+Update: the downside of _Camera to View_ is that I found I kept on accidentally moving the camera while in camera view.
+
 ### Render
 
 Once you've got the camera view that you want you can generate a high-quality render - go to the _Render_ menu and select _Render Image_ (or press `F12`). This pops up a new window and does the render - on my terrible GT 730 graphics card, this took 140s. You can then save the result via _Save As..._ under this new window's _Image_ menu (or `alt-s`) and get something like this:
@@ -506,3 +515,185 @@ Click _New_ and then a whole array of settings appear, just go to _Base Color_ a
 Now generate a render (once you've got the camera view you want) with `F12`, with some color in the scene, it's interesting to see how the blue of the plane also affects the color of the donut:
 
 ![render 2](render-02.png)
+
+Level 1, Part 7 - materials
+---------------------------
+
+Note: at this point things start getting frustratingly slow if you don't have a good graphics card - I upgraded to a system with an RTX 2060 (it required a system upgrade as the power supply on my old system could provide a total of 300W whereas the RTX 2060 can draw up to 250W on its own - in contrast to an older card like the GTX 1050 Ti that just draws at most 25W).
+
+Now, we're going to add a material for the icing. As with the plane, select it, go to _Material Properties_, click _New_.
+
+Andrew notes that only the following properties are ever commonly used:
+
+* _Base Color_, e.g. 0.88, 0.35 and 0.9 HSV values for pink.
+* _Roughness_ - how sharp the reflection looks - 0 is like a mirror, 1 is like chalk. Try 0.34 for icing.
+* _Normal_ - this comes into play with bumpy surfaces and will be covered later.
+
+Note: it's important to be looking at the donut from the right angle (as in the video with the light very much top-left) to really see how roughness affects things. As there's nothing to reflect in this scene, 0 actually looks less reflective than e.g. 0.3 where the donut becomes more obviously shiny.
+
+Andrew notes that beginners often adjust the _Specular_ value to turn down reflection when they should be using _Roughness_.
+
+For less common materials, like many foods and skin, where light also enters and scatters below the surface (think of holding a torch in front of your fingers), have a characteristic called subsurface scattering which you adjust with:
+
+* _Subsurface_ - adjusting this on its own is kind of an odd affect but its clear something interesting is happening, try 0.3.
+* _Subsurface Color_ - this makes things more normal, Andrew adjusts this to something very close to the _Base Color_, i.e. 0.94, 0.33 and 0.9 HSV values, but it isn't clear if you should aim for an identical color and what you should be aiming for otherwise.
+* _Subsurface Radius_ - how far the light bounces around inside the surface. There are three values - for the red, green and blue channels. Here he goes for 0.3, 0.15 and 0.15. Again it's unclear, how exactly these values are chosen.
+  
+Note: the values above, e.g. for _Subsurface_ are the final values Andrew chose rather than the initial ones he tries.
+
+![img.png](icing-material.png)
+
+### Renders
+
+Here are some renders that show how the addition of each of the above settings affects thigs.
+
+_Icing without material._  
+![render](render-icing-0.png)
+
+_Icing with base color._  
+![render](render-icing-1-base-color.png)
+
+_Icing with roughness._  
+![render](render-icing-2-roughness.png)
+
+_Icing with subsurface._  
+![render](render-icing-3-subsurface.png)
+
+_Icing with subsurface color._  
+![render](render-icing-4-subsurface-color.png)
+
+_Icing with subsurface radius._  
+![render](render-icing-5-subsurface-radius.png)
+
+### Overlays
+
+When not in camera view and working with materials, all the overlays, e.g. camera, light, 3D cursor and the outline of the currently selected object, can be distracting.
+
+![img.png](overlays-on.png)
+
+You can turn them off by unselecting the _Show Overlays_ icon (solid disc offset from circle outline):
+
+![img.png](show-overlay.png)
+
+![img.png](overlay-off.png)
+
+### Donut material
+
+In the future, we'll give the donut a proper texture - for the moment we'll just give it a basic material.
+
+So select the donut and give it a material with:
+
+* _Base Color_ 0.08, 0.44 and 0.9 for HSV.
+* _Subsurface_ 0.1 (a lot less than the icing but still a little).
+* _Subsurface Color_ 0.09, 0.31 and 0.9 for HSV.
+* _Subsurface Radius_ 0.1 for all three values.
+
+Unlike the icing, roughness is left unchanged.
+
+### Splitting the view
+
+We want to be able to see both the camera view and a view in which we can move the light and the camera - so let's split the view.
+
+Just go to any of the view's borders where you see the resize cursor:
+
+![img.png](resize-cursor.png)
+
+And then right-click, in this case select _Vertical Split_ and then drag and click where you want the split. Note: the right-click menu doesn't always show for me and sometimes I have to click around a bit and then retry.
+
+An easier, if initially somewhat confusing way to split things, is to go a corner until the cursor turns into a cross-hair and then drag:
+
+![img.png](cross-hair-cursor.png)
+
+E.g. go to the upper-left corner as shown, click and drag right. I found it easy to create new views but removing them was more of an issue. The trick seems to be - if you drag the cursor into the view containing the corner then you split that view, however, it you drag the cursor outward towards another view then you'll see a large arrow appear indicating that you'll join with, i.e. replace, that view.
+
+If you just right-click between two views then you get a menu that also allows you to join views.
+
+Currently, the small light source produces a hard sunlight-like effect. So with the view split we want to increase its size to get a softer effect. Expand the light source size way up and you'll see the shadown of the donut getting much softer.
+
+Try a _Size_ of 0.45m and a slightly reduced _Power_ of 330W.
+
+![img.png](light-split-view.png)
+
+### Color management
+
+Andrew mentions that he'll do much more on color in another series and says that he uses a [Spyder](https://spyderx.datacolor.com/) to calibrate his monitor.
+
+However, for the moment a quick way to check that things look OK is to go to _Render Properties_, expand _Color Management_ and temporarily switch _View Transform_ from _Filmic_ to _False Color_.
+
+Here, you can see things overexposed at 500W:
+
+![img.png](false-color-over-exposed-500W.png)
+
+Andrew says you're aiming for a more grey tone for the center of interest (in this case the icing) and you want to wind things down so that at most there are just a few over-exposed/blown-out areas, as here with 330W:
+
+![img.png](false-color-330W.png)
+
+To be honest, I'm not entirely sure what he means by grey in this context but I can see that adjusting down the Wattage reduces the blown-out red areas. _Maybe_ red is highlighting "bad" areas and green "good" areas with a grayish green being what you're aiming for.
+
+### Plane color
+
+Andrew did split testing and found people preferred pink-on-pink, so try changing the plane color from blue to e.g. 0.86, 0.27 and 0.9 for HSV.
+
+### Reducing noise
+
+As noted way above, whenever you change something, you'll see the _Path Tracing Sample_ counting up to 32 as Blender gradually rerenders the view. If you go to _Render Properties_, under _Sampling_, you'll see this 32 as the _Viewport_ value and also see 128 as the value used for high quality renders. This affects how noisy things appear and even at 128 samples you still some noise in the high quality render - but upping it further, e.g. to 256, gets very expensive time-wise and doesn't completely resolve the problem anyway.
+
+Instead it's better to use a denoiser. Go to _Layer Properties_ and tick _Denoising Data_:
+
+![img.png](denoising-data.png)
+
+At this point, Andrew switches the _Viewport Shading_ from _Rendered_ to _Solid_. As covered earlier, he does this with `z` to bring up a pie menu and then `6` to select _Solid_ but you can do it via the icons in the upper-right corner.
+
+Then we need to switch from the normal _Layout_ workspace to the _Compositing_ workspace (see the buttons in the main menu bar).
+
+**Important:** maybe this has changed between Blender 2.8 and 2.9. Initially, I just saw a blank workspace of switching to _Compositing_. You have to tick _Use Nodes_ for the nodes to appear and for the _Item_ tab (on the right edge) to become available. In the Blender documentation, the first thing they say, in the [Compositing Getting Started](https://docs.blender.org/manual/en/latest/compositing/introduction.html#getting-started) section, is to tick _Use Nodes_, so I wonder why it isn't ticked by default.
+
+![img.png](compositing.png)
+
+Andrew says compositing and nodes will be covered properly later. For the moment, we'll just apply a mechanical set of steps to apply denoising to the image _after_ it's been rendered (i.e. denoising isn't part of the render itself). So the steps are:
+
+* `shift-A` to bring up the _Add Node_ menu, go to _Filter_ and select _Denoise_.
+* Drag things around such that the new node is between the _Render Layers_ node and the the _Composite_ node.
+* Click on the yellow disc to the left of _Noisy Image_ (on the _Render Layers_ node) and drag from it to _Image_ on the _Denoise_ node.
+* Similarly, connect _Denoising Normal_ to _Nornal_ and _Denoising Depth_ to _Depth_.
+* Connect _Image_ on the _Denoise_ node to _Image_ on the _Composite_ node (this will break the existing link to _Image_ on the _Render Layers_ node).
+
+![img_1.png](nodes-for-denoise.png)
+
+Andrew goes into how you can get this new node layout to be applied to an existing render - something which would be very important if you wanted to try out things with an existing render without incurring the cost of a new render each time.
+
+But the easiest things, is to just rerender (with `F12`) - you'll see the noisy render occur just as before but then once its completed the denoise step is applied and the noise very suddenly disappears.
+
+
+### Applying changes to an existing render
+
+If you want to apply changes to an existing render then you have to do the following.
+
+Switch the _Editor Type_ from _Dope Sheet_ (which we briefly saw come into play when animating the monkey head with fire in the very first lesson) to _Image Editor_:
+
+![img.png](image-editor.png)
+
+And change the linked image to _Render Result_:
+
+![img.png](menu-render-result.png)
+
+Look at the render result, if you've already rerendered (as suggested above) then you have a nice denoised image. So try connecting the _Image_ output of the _Render Layers_ node to the _Image_ input of the _Composite_ node (so breaking the link to the _Denoise_ node) and you'll see the result instantly update to the noisy version. Then reconnect the _Image_ output of the _Denoise_ node and after a few seconds, you'll see the denoised version again.
+
+Note: you can maximize the area with the render result with `ctrl-space` - this maximizes the area that the mouse is currently over - and just press `ctrl-space` again to change things back to normal.
+
+If you e.g. change something on the _Denoise_ node and want to see the result updated, you have to temporarily drag the connection away from the _Composite_ node's _Image_ input and then reconnect it (all in one action, you don't have to drag and release, just drag away and then connect it straight back on).
+
+![img.png](reconnect.png)
+
+### Denoise results
+
+_Render before denoising._  
+![render-predenoize.png](render-predenoize.png)
+
+_Render after denoising._  
+![render-postdenoize.png](render-postdenoize.png)
+
+Level 2
+-------
+
+OK - that's it for level 1. As this page is already quite long the next level has its own page [here](LEVEL-2.md).

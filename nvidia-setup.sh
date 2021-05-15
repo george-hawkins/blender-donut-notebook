@@ -12,8 +12,10 @@ cd /usr/share/doc/nvidia-driver-460
 sudo cp nvidia-suspend.service /etc/systemd/system
 sudo cp nvidia-hibernate.service /etc/systemd/system
 sudo cp nvidia-resume.service /etc/systemd/system
-sudo cp nvidia /lib/systemd/system-sleep
-sudo cp nvidia-sleep.sh /usr/bin
+
+# Unlike the `.service` files, these should be executable - so use `install`.
+sudo install nvidia /lib/systemd/system-sleep
+sudo install nvidia-sleep.sh /usr/bin
 
 sudo systemctl enable nvidia-suspend.service
 sudo systemctl enable nvidia-hibernate.service
