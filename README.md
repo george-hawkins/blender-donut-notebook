@@ -442,7 +442,7 @@ Above, you can see _Device_ is set to _CPU_. If you've got a decent graphics car
 
 If you've got a super new Nvidia RTX graphics card then it should be selected under the OptiX tab rather than _CUDA_ and if you've got an AMD graphics card then it should be selected under _OpenCL_.
 
-**Update:** I eventually bought an RTX card and initially didn't have it chosen under the OptiX tab. Switching to OptiX had a dramatic positive effect on my render times but the first time I did a render, I thought Blender had hung. Instead of rending, it sat and did nothing but if you look closely, in the render window, you can see the text "Loading render kernels (may take a few minutes the first time)". It took less than a minute, for me, and more than made up for it in render speed afterwards.
+**Update:** I eventually bought an RTX card and initially didn't have it chosen under the OptiX tab. Switching to OptiX had a dramatic positive effect on my render times but the first time I did a render, I thought Blender had hung. Instead of rendering, it sat and did nothing but if you look closely, in the render window, you can see the text "Loading render kernels (may take a few minutes the first time)". It took less than a minute, for me, and more than made up for it in render speed afterwards.
 
 If you haven't got either an Nvivida or an AMD graphics card then you just have to use _CPU_. My cheap Nvidia GT 730 card is barely faster than _CPU_ anyway.
 
