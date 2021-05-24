@@ -1,4 +1,6 @@
 .idea/
+renders/
+
 *.blend
 *.blend1
-renders/
+!donut-level2-part3-start.blend

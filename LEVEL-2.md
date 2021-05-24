@@ -333,4 +333,120 @@ This isn't relevant to anything we're doing in this tutorial.
 Level 2, Part 3 - texture painting
 ----------------------------------
 
-...
+First unexclude the collections for camera, light and environment in the _Outliner_, exclude the sprinkles collection, and hide the icing (using its eye icon).
+
+Note: at various points, Andrew has _Show Overlays_ toggled-off - you can do this with `alt-shift-Z`. 
+
+Make sure the donut is selected and then click the _Texture Paint_ button in the main menu bar to switch to that workspace. Once you zoom in on the donut, you'll see it's a distinct purple color:
+
+![img.png](texture-painting-workspace.png)
+
+The purple (or apparently pink in some other contexts) is a warning sign that this object has no texture associated with it.
+
+If you didn't select the donut before switching to the _Texture Paint_ workspace, you just end up with a grey donut and there seems to be nothing you can do in this workspace to select it such that it goes purple (you have to switch back to the _Layout_ workspace, select it and switch back):
+
+![img.png](donut-unselected-for-texture-painting.png)
+
+### UV unwrapping
+
+We already briefly came across "UV" when adding the first _UV Sphere_. UV unwrapping describes the process by which the surface of an object is unwrapped to form a flat surface, e.g. think of how the surface of the earth is "unwrapped" to form a flat map. The different rules you can use to do this result in all the different [map projections](https://en.wikipedia.org/wiki/List_of_map_projections).
+
+Andrew uses this example:
+
+![uv unwrapping](uv-unwrapped-santa.jpg)
+
+The original source seems to be this [tweet](https://twitter.com/xxivips/status/938366852039888896?s=20) from @xxivips.
+
+So we're interested in how the surface of the purple donut in the right viewport is unwrapped into the flat mesh seen in the left viewport.
+
+It actually turns out that we don't need to do anything for the UV unwrapping of the donut torus as it turns out that the default unwrapping of the mesh that makes up the torus is just what we want.
+
+To show's that you can work on UV unwrapping by switching to the _UV Editing_ workspace - he just switches directly from the _Texture Paint_ workspace - however, when I did this first, the donut just showed up as a grey donut with no mesh (despite _Edit Mode_ clearly being selected). I had to switch back to _Layout_ mode, select the donut and `tab` to _Edit Mode_ and then switch back to the _UV Editing_ workspace in order to see a mesh. Once I did this once then the mesh showed up properly independent of whether I'd turned it on in _Layout_ mode first - so maybe this is just a glitch in Bender 2.92.
+
+**Update:** it may simply have been that I had _Show Overlays_ toggled off - I thought this just hid things like the camera and light but it turns out that it also hides any meshes.
+
+So once in the _UV Editing_ workspace, with the mesh successfully showing, you can select all the vertices of the donut. Initially, I forgot to turn on x-ray - `alt-Z` - and got a very odd layout in the left-hand _UV Editor_:
+
+![img.png](uv-without-x-ray.png)
+
+With x-ray turned on, you get the full mesh:
+
+![img.png](uv-with-x-ray.png)
+
+As Andrew says, there's nothing that needs to be adjusted here for the donut and that this is usually the case for primitives like the torus that are created directly by Blender. When we do the coffee cup later on, we'll have to handle the UV unwrapping.
+
+However, it's worth noting that if you zoom in on the mesh that you'll see the elements of the mesh are taller than they are wide, i.e. they're stretched vertically:
+
+![img.png](stretched-grid.png)
+
+But if you look at the mesh on the donut you'll see that the faces are fairly square shaped. This would come into play if you e.g. laid down a photo on the unwrapped surface - but this appears easy enough to deal with, you can select the mesh and use `s` to adjust its shape (and the proportions of the rectangles its composed of) to resolve this distortion:
+
+![img.png](scale-uv-mesh.png)
+
+For a more interesting unwrapping example, create a new project and add in the monkey head we used in the very first lesson:
+
+![img.png](un-unwrapped-monkey-head.png)
+
+### Back to texture painting
+
+So now (having made no changes in the _UV Editing_ workspace) we switch back to the _Texture Paint_ workspace, click _New_ above the UV mesh and name it "Donut_texture" with width 2048 and height 1024. This screenshot shows a nice Blender feature, we want an image that twice as wide as it is high so we can just tag of "*2" to default width and Blender will do the maths:
+
+![img.png](new-texture-image.png)
+
+There's nothing magic about the chosen dimensions, it's just approximately the size of paper you'd use if you were going to roll it into a tube and bend it into a torus.
+
+If you want to see the pure black rectangle that Andrew sees, just toggle off _Show Overlays_ for this viewport.
+
+The donut is still purple, i.e. it's warning us that it's still got no texture assigned. Replacing the current flat _Base Color_ with the image we've just created actually involves creating a new node.
+
+So, make sure the donut is selected and switch to the _Shading_ workspace. In the _Shader Editor_ (where the nodes are), press `shift-A` and, under _Texture_, select _Image Texture_. In this new node, click the image dropdown (to the left of _New_), select "Donut_texture" and then link its _Color_ output to the input for _Base Color_:
+
+![img.png](image-texture-node.png)
+
+Note: in the screenshot above you can see various different colored inputs and outputs but look at all the connections, e.g. _Color_ to _Base Color_ where both are yellow - it turns out the colors signal what can potentially be connected to what, i.e. you can only connect matching colors.
+
+Now, switch back to the _Texture Painting_ workspace and the donut should look very black. Now try painting on the donut and also on the image (you should already be in _Draw_ mode in both viewports). You'll notice that if you paint off the side of the image, it _doesn't_ wrap around and continue painting on the other side - however, if you paint on the donut it does wrap around at join points. This is important if you don't want strange effects at the seams, i.e. where the edges of the image are.
+
+Andrew says you have to save the image separately. In Blender 2.9, it's true that when you save the `.blend` file, this doesn't also save the image. However, if you quit Blender without having saved the image, it will warn you. And you don't have to save the image as a separate file - by default Blender [packs](https://docs.blender.org/manual/en/latest/files/blend/packed_data.html) it into `.blend` file. So you don't have to use _Save As_, you can just use _Save_ and let Blender manage it within the `.blend` file.
+
+Note: the shortcut for saving the `.blend` file is `ctrl-S` but the shortcut for saving resources like the texture image or the high-quality renders (created with `F12`) is `alt-S`.
+
+Establish a base color for the image - press `n` to pop out the side menu, then in the _Tool_ tab set the color to a donut color, i.e. the same as your old donut _Base Color_, e.g. HSV 0.08, 0.44 and 0.9. Then hide the menu, adjust your brush size to maximum with `f` and paint over anything you've done so far.
+
+Note: I didn't have _Smooth Stroke_ (or _Stablize Stroke_ as it seems to be called in Blender 2.92) turned on but my drawing was still extremely slow. Turning off _Anti-Aliasing_ does help a bit. It seems many people experience something similar - and other than reducing your brush size nothing definitely seems to help.
+
+Now we want to paint a white belt around the donut. Pop out the menu again with `n` and swap the colors (the little "cycle" icon to the right of the two colors or press `x`) to make black the primary color and then adjust it to be white (just set the V of HSV to 1). In the same menu, set _Radius_ to 50px and _Strength_ to 0.3.
+
+Note: from then on `x` is really useful for switching between the primary and secondary color (so you can fix up places where you went to far with one color or the other).
+
+Try drawing on the white belt directly - it's fairly clear it's painted on (with a stylus and brush pressure you could achieve a better result). We want reduce the artificial appearances of the flat brush stroke.
+
+Go to _Texture Properties_ (the very last of the properties tabs), click _New_ and select _Clouds_ (one of the built-in textures) from the _Type_ dropdown. Andrew then also increases the _Size_ value from 0.25 to 0.65 - you can see the result of this in the _Preview_ area (he says it makes things more varied but as you can see it reduces the amount of detail):
+
+![img.png](brush-texture.png)
+
+Then over _Image Editor_ viewport, pop out the side menu again and expand the _Texture Mask_ area (**not** the _Texture_ area above it). Click the checkerboard pattern, select the cloud texture you just created and change the _Mask Mapping_ value from _Tiled_ to _Random_.
+
+![img.png](texture-mask.png)
+
+If _Mask Mapping_ is left as _Tiled_ then painting essentially gradually reveals the tiled texture - whereas with _Random_ the texture just starts each time from where you last clicked, so the more you click the more mushed up things become - which is actually what we want in this situation, we're not interested in revealing the texture itself but just using it to take the flatness of the brush strokes.
+
+Note: in the _Brushes_ section of the side menu, you can add and name additional brushes, so I named one "DonutBeltBrush" with the texture settings, size and strength we've just setup and added another brush with no texture and maximum size so I could use it to quickly start over again and then switch back to the belt drawing brush. What gets remembered for a particular brush seems a bit arbitrary, e.g. the strength is remembered but the size isn't.
+
+Don't forget about the inside of the donut hole - paint a belt around it too. It's a little trickier to get at.
+
+![img.png](completed-belt.png)
+
+### Darkening the donut
+
+We've used the brush and texture to introduce a lighter colored belt around the donut. Now to use the texture darken up and get rid of the flatness of the color of the rest of the donut.
+
+To do this, increase the brush size to e.g. 180px, make sure white is the primary color and change it to black (V value of 0). If you paint on the donut now - you'll paint a cloudy black color which isn't what we want. Instead, change the brush _Blend_ type from _Mix_ to _Overlay_ - this, instead of painting over the existing color, will reduce its brightness, i.e. make it darker (essentially adjust the V value of the existing color).
+
+At this point, I noticed something that I hadn't seen (but was also there) when painting the white belt. An odd seam corresponding to the edge of the image:
+
+![img.png](bad-seam.png)
+
+Go to _Object Data Properties_, expand _UV Maps_ and press minus to remove the existing map and then plus to add a new one. Then in the _UV Editing_ workspace, select the whole donut mesh, then right-click on the white square in the _UV Editor_ and select _Follow Active Quads_. Switch to the _Texture Paint_ workspace and add a new image (as before) with a new name, go to the _Shading_ workspace and select this new image in the _Image Texture_ node.
+
+TODO: note that you don't have to delete or reset - you can just unwrap again.
