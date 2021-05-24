@@ -42,6 +42,8 @@ Just press the relevant key, e.g. `g` on its own, you don't use these keys in co
 
 Think of `g` as grab.
 
+**Update:** you can enter angles when using `r`, e.g. try pressing `r` and then type `180` and left-click or press `Enter` to finish. You'll see the number building up, as you type it, in the upper-left corner of the viewport.
+
 When in any mode press `x`, `y` or `z` to snap to moving in a particular axis - or press the MMB and move to snap to the desired plain.
 
 **Update:** I misunderstood how the MMB works at this point. Press `g`, then, before you start moving, press the MMB - it'll immediately snap to a particular axis but, if required, with the MMB still pressed move the mouse to select a different axis, once you have the desired axis release the MMB and move the object on that axis. Press the LMB to finish the movement or the RMB (or `esc`) to cancel it. A little confusingly, the object moves while you're selecting an axis but once you've selected an axis any movement on the other axes is reset, i.e. in the end, your only movement (relative to the original position) is on the selected axis. For more on this see the [axis locking types](https://docs.blender.org/manual/en/latest/scene_layout/object/editing/transform/control/axis_locking.html#axis-locking-types) documentation (where you can see that you can also lock to a plain with `shift-MMB`).
