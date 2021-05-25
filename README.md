@@ -9,7 +9,9 @@ I used Blender version 2.92 while the videos use version one of the 2.8 series o
 
 Blender can be used with a trackpad and keyboard without number pad - but a number pad and a mouse with a scroll wheel (that can also be used as a third button) seem to be _near_ essential.
 
-![m705](m705-small.jpg)
+![m705](m705-small.jpg) ![keyboard](keyboard.png)
+
+As an enthusiastic Mac user, this setup isn't very normal. And even on other platforms, I've used scroll wheel mice but rarely, if ever, used it as a clickable third button. Similarly, I've never used the NumPad even when available. As a software developer, I do use the function keys in my IDE but I can imagine many people have never touched them. However, in Blender, I've found myself continuously using the third mouse button, the NumPad and the function keys (or, to be more precise, just `F12` so far).
 
 Learning the shortcut keys is also pretty essential or you end up spending all your time looking for things in menus.
 
@@ -98,6 +100,8 @@ Oddly, if you click away from the torus, this item is gone forever - it's only a
 * 12 minor segments
 * 0.05 major radius
 * 0.026 minor radius
+
+Note: you can e.g. enter `5cm` rather than `0.05`.
 
 You're looking for your segments to be roughly square (for reasons that become clearer much later). Selecting huge numbers of segments makes your life harder when manipulating the object and isn't needed for a smooth final object.
 

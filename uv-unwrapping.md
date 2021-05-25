@@ -1,3 +1,26 @@
+All the unwraps below feature a top to bottom seam around the "tube" of the torus - I won't mention it again, just take it as given.
+
+_Seam around inside of the hole._  
+![img.png](torus-unwrap-inside-edge.png)
+
+_Seam around outside of the torus._  
+![img.png](torus-unwrap-outside-edge.png)
+
+_Seam around the top of the torus._  
+![img.png](torus-unwrap-top-edge.png)
+
+Aside: I've no idea why the UV maps above don't have at least one axes of symmetry.
+
+The simplest arrangement, I think, is a circular seam around the inside of the hole and then instead of plain _Unwrap_, select one of the other unwrap options - _Follow Active Quads_.
+
+Unlike _Unwrap_, you don't automatically end up with a map that fits within the 0-to-1 space, to resolve this, select the whole map, go to the _UV_ menu, select _Pack Islands_ and then, in the _Pack Islands_ panel that temporarily appears at the bottom of the viewport, untick _Rotate_.
+
+![img.png](torus-unwrap-active-quads.png)
+
+Aside: traditionally, it seems, these little panels, that become available after you perform certain operations, have been called _operator panels_. Even if you've clicked or done something that causes it to disappear, you can get it back via _Adjust Last Operation_ in the _Edit_ menu.
+
+Note: sometimes _Follow Active Quads_ resulted in a map with a twist in it - I could resolve this by going to the _UV_ menu and selecting _Reset_ and then redoing things (but I don't know why the _Reset_ was necessary).
+
 UV unwrapping
 =============
 
@@ -7,7 +30,9 @@ First things first, to work with UV maps, you need to switch to the _UV Editing_
 
 The name is simple enough - the bottom-left corner has co-ordinates (0, 0) and the top-right corner has co-ordinates (1, 1). You're not forced to keep everything within this space - but not doing so results in confusing result - so when working with UV maps always move and scale the map if necessary to keep it within this space.
 
-If you haven't got _Show Overlay_ enabled or you haven't selected one or more faces of an object in the _3D Viewport_ then the 0-to-1 space will be empty.
+If the 0-to-1 space is empty then `tab` to _Object Mode_ and make sure you've got the object you're interested in selected then `tab` to _Edit Mode_ and press `a` to select all its vertices - you should then see the UV map for all the selected faces. If you still don't see anything, make sure you haven't got _Show Overlay_ accidentally toggled off.
+
+Note: If you only select a subset of the vertices then you only see the UV map corresponding to those faces that are fully surrounded by those vertices.
 
 When you add a standard shape, it is created with a UV map where the shape is unwrapped into a reasonable default flat representation. However, this representation doesn't keep sync with changes you make to these objects. So the more you deform or otherwise change the shape, the less appropriate the default unwrapping becomes and you have to re-unwrap it.
 
@@ -65,6 +90,8 @@ It turns out that this is just the six faces of the cube unwrapped into six unco
 ![img.png](stacked-faces.png)
 
 Note: if you just drag vertices in the _UV Editor_ without first selecting an individual face in the _3D Viewport_ then you _sometimes_ end up dragging a vertex associated with more than one face. I'm unsure if such vertices are really shared or if it's multiple vertices sitting on top of each other and I'm selecting all of them at once.
+
+**Update:** I have since discovered situations where _Reset_ did resolve issues. I got myself into situations where unwrapping with _Follow Active Quads_ produced results with unexpected twists in the resulting map and doing _Reset_ and then redoing the unwrap resolved things (why, I don't know).
 
 ### UV checker board grid
 
