@@ -347,49 +347,23 @@ If you didn't select the donut before switching to the _Texture Paint_ workspace
 
 ![img.png](donut-unselected-for-texture-painting.png)
 
-### UV unwrapping
+**Update:** actually, what's going on is very simple - if you already have an object selected, on switching to the _UV Editing_ workspace, then the _3D Viewport_ automatically starts in _Texture Paint_ mode. However, if you've nothing selected then you start in _Object Mode_, then once you've selected something you can use the dropdown menu to switch from _Object Mode_ to _Texture Paint_ mode (or press `ctrl-tab`, to bring up a pie menu of modes, and then `9`).
 
-We already briefly came across "UV" when adding the first _UV Sphere_. UV unwrapping describes the process by which the surface of an object is unwrapped to form a flat surface, e.g. think of how the surface of the earth is "unwrapped" to form a flat map. The different rules you can use to do this result in all the different [map projections](https://en.wikipedia.org/wiki/List_of_map_projections).
+### UV mapping/unwrapping
 
-Andrew uses this example:
+At this point, Andrew takes a few minutes to briefly discuss UV unwrapping. He says we don't actively have to do anything UV-mapping related at this stage, we just need to be somewhat aware of what's involved and the subject will be covered in more detail when we come to the coffee cup.
 
-![uv unwrapping](uv-unwrapped-santa.jpg)
+It turns out that one may have to actively update the UV map related with the donut depending on how and by how much one distorted the original donut. This was the case for my donut - so, I had to take the time, at this point, to learn more about UV unwrapping. My notes are here in [`uv-unwrapping.md`](uv-unwrapping.md). Initially, things seemed much more complicated than they are - the basics of UV mapping are actually very simple and once you've learned them you can take a flat representation of an object and in a few minutes produce a cool looking 3D representation.
 
-The original source seems to be this [tweet](https://twitter.com/xxivips/status/938366852039888896?s=20) from @xxivips.
+_2D image._  
+![flat cornflakes](cornflakes-basic.png)
 
-So we're interested in how the surface of the purple donut in the right viewport is unwrapped into the flat mesh seen in the left viewport.
-
-It actually turns out that we don't need to do anything for the UV unwrapping of the donut torus as it turns out that the default unwrapping of the mesh that makes up the torus is just what we want.
-
-To show's that you can work on UV unwrapping by switching to the _UV Editing_ workspace - he just switches directly from the _Texture Paint_ workspace - however, when I did this first, the donut just showed up as a grey donut with no mesh (despite _Edit Mode_ clearly being selected). I had to switch back to _Layout_ mode, select the donut and `tab` to _Edit Mode_ and then switch back to the _UV Editing_ workspace in order to see a mesh. Once I did this once then the mesh showed up properly independent of whether I'd turned it on in _Layout_ mode first - so maybe this is just a glitch in Bender 2.92.
-
-**Update:** it may simply have been that I had _Show Overlays_ toggled off - I thought this just hid things like the camera and light but it turns out that it also hides any meshes.
-
-So once in the _UV Editing_ workspace, with the mesh successfully showing, you can select all the vertices of the donut. Initially, I forgot to turn on x-ray - `alt-Z` - and got a very odd layout in the left-hand _UV Editor_:
-
-![img.png](uv-without-x-ray.png)
-
-With x-ray turned on, you get the full mesh:
-
-![img.png](uv-with-x-ray.png)
-
-As Andrew says, there's nothing that needs to be adjusted here for the donut and that this is usually the case for primitives like the torus that are created directly by Blender. When we do the coffee cup later on, we'll have to handle the UV unwrapping.
-
-However, it's worth noting that if you zoom in on the mesh that you'll see the elements of the mesh are taller than they are wide, i.e. they're stretched vertically:
-
-![img.png](stretched-grid.png)
-
-But if you look at the mesh on the donut you'll see that the faces are fairly square shaped. This would come into play if you e.g. laid down a photo on the unwrapped surface - but this appears easy enough to deal with, you can select the mesh and use `s` to adjust its shape (and the proportions of the rectangles its composed of) to resolve this distortion:
-
-![img.png](scale-uv-mesh.png)
-
-For a more interesting unwrapping example, create a new project and add in the monkey head we used in the very first lesson:
-
-![img.png](un-unwrapped-monkey-head.png)
+_2D image mapped onto 3D shape._  
+![cereal render](render-cereal.png)
 
 ### Back to texture painting
 
-So now (having made no changes in the _UV Editing_ workspace) we switch back to the _Texture Paint_ workspace, click _New_ above the UV mesh and name it "Donut_texture" with width 2048 and height 1024. This screenshot shows a nice Blender feature, we want an image that twice as wide as it is high so we can just tag of "*2" to default width and Blender will do the maths:
+Now, assuming you're still in the _Texture Paint_ workspace, click _New_ above the UV mesh and name it "Donut_texture" with width 2048 and height 1024. This screenshot shows a nice Blender feature, we want an image that twice as wide as it is high so we can just tag of "*2" to default width and Blender will do the maths:
 
 ![img.png](new-texture-image.png)
 
@@ -410,6 +384,62 @@ Now, switch back to the _Texture Painting_ workspace and the donut should look v
 Andrew says you have to save the image separately. In Blender 2.9, it's true that when you save the `.blend` file, this doesn't also save the image. However, if you quit Blender without having saved the image, it will warn you. And you don't have to save the image as a separate file - by default Blender [packs](https://docs.blender.org/manual/en/latest/files/blend/packed_data.html) it into `.blend` file. So you don't have to use _Save As_, you can just use _Save_ and let Blender manage it within the `.blend` file.
 
 Note: the shortcut for saving the `.blend` file is `ctrl-S` but the shortcut for saving resources like the texture image or the high-quality renders (created with `F12`) is `alt-S`.
+
+### Checking for UV map issues
+
+Now's a good time to test for issues with the UV map rather than discovering them much later in the process (as I did).
+
+Take the time to draw a loop like this on this donut and look carefully for any odd artifacts, e.g. here you can see the issue with my donut - an unnatural white band extending outward from the area I'd painted on:
+
+![img.png](uv-issues-top.png)
+
+Similarly, paint one or more bands around the "tube" of the torus and look for issues:
+
+![img.png](uv-issues-tube.png)
+
+If you don't see any issues then great - as Andrew says, you just need to be aware of the idea of UV unwrapping at this point in time. If you do find an issue, you can solve it cookbook style like so:
+
+* Press `x` to toggle your brush color from white to black and paint your image black, i.e. get it back to its original state. Remember that you can change the brush size with `f`.
+* Switch to the _Layout_ workspace and, in _Object Mode_, select the donut.
+* Switch to the _UV Editing_ workspace and, if the donut's vertices aren't already all selected in the right-hand _3D Viewport_, press `a` to select them all.
+* Then in the left-hand _UV Editor_, go to the _UV_ menu (to the left of _View_, _Select_ etc.), select _Reset_.
+* Then from the same menu, under the _Unwrap_ submenu, select _Follow Active Quads_ (and just click _OK_ in the small _Follow Active Quads_ dialog).
+* Make sure the whole map is selected by pressing `a`.
+* Then, again from the _UV_ menu, select _Pack Islands_ and then, under the main _Edit_ menu, select _Adjust Last Operation_ and untick _Rotate_.
+* Then, yet again from the _UV_ menu, select _Constrain to Image Bounds_ (so that it becomes ticked).
+* Then press `.` (the normal `.` key, not the one on the NumPad) to bring up the _Pivot Point_ pie menu and switch from _Bounding Box Center_ to _2D Cursor_.
+* Then press `s` and scale the map to fill the underlying image.
+
+_1. Paint everything black again._  
+![img.png](cookbook-uv-fix-1.png)
+
+_2. Select the donut in the Layout workspace._  
+![img.png](cookbook-uv-fix-2.png)
+
+_3. Select all the vertices with `a` in the UV Editing workspace._  
+![img.png](cookbook-uv-fix-3.png)
+
+_4. Select Reset and then Follow Active Quads._  
+![img.png](cookbook-uv-fix-4.png)
+
+_5. Select the whole map with `a`, then Pack Islands, then Adjust Last Operation and untick rotate._  
+![img.png](cookbook-uv-fix-5.png)  
+<sup>If you look at the left and right edges of the selected map it looks like they extend beyond the underlying image - but this isn't the case, it's just an artifact of highlighting.</sup>
+
+_6. Constrain to Image Bounds, switch Pivot Point to 2D Cursor, press `s` and scale to fit._  
+![img.png](cookbook-uv-fix-6.png)
+
+That's it - if you return to the _Texture Paint_ workspace and toggle the brush color back to white then all should be good if you try painting on the donut now:
+
+![img.png](cookbook-uv-fix-7.png)
+
+Note: the _Reset_ step above is almost never really needed and it does cause some extra cleanup steps to get the UV map properly scaled again but including it covers situations where the UV map can otherwise become twisted.
+
+The cookbook approach makes the whole thing seem strange and obscure. But see my [`uv-unwrapping.md`](uv-unwrapping.md) notes - the basics are actually really simple and interesting.
+
+### Painting the donut
+
+Finally - painting the donut. Whether you had to update the donut's UV map or could skip that step, you should now be in the _Texture Paint_ workspace.
 
 Establish a base color for the image - press `n` to pop out the side menu, then in the _Tool_ tab set the color to a donut color, i.e. the same as your old donut _Base Color_, e.g. HSV 0.08, 0.44 and 0.9. Then hide the menu, adjust your brush size to maximum with `f` and paint over anything you've done so far.
 
