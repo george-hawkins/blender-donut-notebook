@@ -1,34 +1,40 @@
-All the unwraps below feature a top to bottom seam around the "tube" of the torus - I won't mention it again, just take it as given.
+UV maps and UV unwrapping
+=========================
 
-_Seam around inside of the hole._  
-![img.png](torus-unwrap-inside-edge.png)
+First - UV maps and unwrapping are much simpler than it initially seems. Just stick with it for a while and you'll quickly reach a point where it all seems fairly obvious. We already briefly came across "UV" when adding the first _UV Sphere_.
 
-_Seam around outside of the torus._  
-![img.png](torus-unwrap-outside-edge.png)
+A UV map determines how a 2D image is mapped onto a 3D object (and vice-versa - if your 3D object's surface is mapped to a 2D image and you paint directly onto the 3D object then the UV map will determine how that appears on the flat 2D image).
 
-_Seam around the top of the torus._  
-![img.png](torus-unwrap-top-edge.png)
+The process of creating a UV map is called UV unwrapping. I.e. it's the process by which the surface of a 3D object is unwrapped to form a flat 2D surface, e.g. think of how the surface of the earth is "unwrapped" to form a flat map. The different rules you can use to do this result in all the different [map projections](https://en.wikipedia.org/wiki/List_of_map_projections).
 
-Aside: I've no idea why the UV maps above don't have at least one axes of symmetry.
+Andrew uses this example:
 
-The simplest arrangement, I think, is a circular seam around the inside of the hole and then instead of plain _Unwrap_, select one of the other unwrap options - _Follow Active Quads_.
+![uv unwrapping](uv-unwrapped-santa.jpg)  
+<sup>The original source seems to be this [tweet](https://twitter.com/xxivips/status/938366852039888896?s=20) from @xxivips.</sup>
 
-Unlike _Unwrap_, you don't automatically end up with a map that fits within the 0-to-1 space, to resolve this, select the whole map, go to the _UV_ menu, select _Pack Islands_ and then, in the _Pack Islands_ panel that temporarily appears at the bottom of the viewport, untick _Rotate_.
 
-![img.png](torus-unwrap-active-quads.png)
+A set of seams need to be specified for your 3D object such that it can be cut open and laid flat (think of the edges of a cereal packet that you'd cut along so that you could lay it out flat). Once laid out flat, the faces of your original 3D object will have corresponding faces in the flat UV map.
 
-Aside: traditionally, it seems, these little panels, that become available after you perform certain operations, have been called _operator panels_. Even if you've clicked or done something that causes it to disappear, you can get it back via _Adjust Last Operation_ in the _Edit_ menu.
+You can also thing of this process as taking the surface of the object and, making the minimum number of cuts, pealing it off and laying it down flat, i.e _unwrapping_ the object.
 
-Note: sometimes _Follow Active Quads_ resulted in a map with a twist in it - I could resolve this by going to the _UV_ menu and selecting _Reset_ and then redoing things (but I don't know why the _Reset_ was necessary).
+If the UV map is laid out over an image then the area of the image covered by a particular face of the map will be mapped to the corresponding face of the 3D object.
 
-UV unwrapping
-=============
+If the size of the face in the UV map perfectly matches the size of the face on the 3D object then no distortion will occur. Achieving this correspondence of sizes is easy with shapes like cubes. However, it's much harder with shapes like spheres - you have to decide e.g. if you want a UV map that's easy to work with but requires a lot of distortion in the underlying 2D image or a much more complex UV map which, while reducing the requirement for distortion, increases the complexity of how things are laid out on the 2D image.
+
+E.g. compare the common [Mercator projection](https://en.wikipedia.org/wiki/Mercator_projection), used in maps of the world, with the [Fuller map projection](https://en.wikipedia.org/wiki/Dymaxion_map) and the [Goode homolosine projection](https://en.wikipedia.org/wiki/Goode_homolosine_projection).
+
+If you're not planning on taking an existing image and mapping it onto a 3D object but instead want to paint onto a 3D object and have the result stored as a 2D image texture then things are a lot simpler - you don't really have to worry about the relationship between the size and shape of faces in the UV map and those on the object itself (beyond ensuring that all faces encompass a large enough area in the underlying image to contain the level of detail you want). However, it makes sense to choose the most intuitive mapping possible as this makes it easier to clean up details directly on the 2D image as well as on the 3D object.
+
+**TLDR;** there's a lot on the basics of working with UV maps below but if you're just interested in quickly seeing what the UV maps for the torus shape look like (as it's the core of our donut) then jump to the last sections of this page.
+
+Basics of UV editing
+--------------------
 
 First things first, to work with UV maps, you need to switch to the _UV Editing_ workspace. If you've got nothing selected then all you'll see in the _UV Editor_ is what's called the 0-to-1 space:
 
 ![img.png](0-to-1-space.png)
 
-The name is simple enough - the bottom-left corner has co-ordinates (0, 0) and the top-right corner has co-ordinates (1, 1). You're not forced to keep everything within this space - but not doing so results in confusing result - so when working with UV maps always move and scale the map if necessary to keep it within this space.
+The name is simple enough - the bottom-left corner has co-ordinates (0, 0) and the top-right corner has co-ordinates (1, 1). You're not forced to keep everything within this space - but not doing so results in confusing result - so when working with UV maps always move and scale the map if necessary to keep it within this space. For a tiny bit more detail see this Blender StackExchange [answer](https://blender.stackexchange.com/a/66732/124535).
 
 If the 0-to-1 space is empty then `tab` to _Object Mode_ and make sure you've got the object you're interested in selected then `tab` to _Edit Mode_ and press `a` to select all its vertices - you should then see the UV map for all the selected faces. If you still don't see anything, make sure you haven't got _Show Overlay_ accidentally toggled off.
 
@@ -42,7 +48,11 @@ _Default cube UV map._
 _Default UV sphere UV map._  
 ![img.png](default-sphere-uvmap.png)
 
-TODO: the default UV map of a torus always seems to include an odd unselected face - I asked about that [here](https://blender.stackexchange.com/q/223588/124535) on the Blender StackExchange - see if I got an answer.
+For a more interesting unwrapping example, try the monkey head we used in the very first lesson. Here you can see that the map doesn't need to be a single continuous surface - the head is separated out into multiple areas called islands.
+
+_Default monkey head UV map._  
+![img.png](un-unwrapped-monkey-head.png)
+
 
 If you go to _Object Data Properties_ and expand _UV Maps_, you see the default UV map associated with the currently selected object:
 
@@ -50,9 +60,13 @@ If you go to _Object Data Properties_ and expand _UV Maps_, you see the default 
 
 **Important:** the left-hand _UV Editor_ only shows the _faces_ that are currently selected in the right-hand _3D Viewport_. So, if you've got nothing select in the _3D Viewport_ (use `alt-A` to unselect all) then everything disappears in the _UV Editor_. Or try just selecting a single face and you'll just see that face in the _UV Editor_. This confused me initially.
 
-### Unwrapping a cube
+Note: when adding an object, it is possible to disable to automatic generation of a UV map by unticking _Generate UVs_ but I don't see any reason to do this:
 
-Let's unwrap something simple to start with. Go _File_ / _New_ / _General_ and let's work on the default cube.
+![img.png](generate-uvs.png)
+
+### Manual unwrapping
+
+Instead of accepting the default UV map, let's manage the unwrapping of something simple ourselves. Go _File_ / _New_ / _General_ and we'll work on the default cube that's always added for you.
 
 Switch to _UV Editing_ and, in the right-hand _3D Viewport_, switch from the default _Vertex select_ mode to the _Edge select_ mode (the shortcut keys for these two modes are `1` and `2` respectively):
 
@@ -74,9 +88,9 @@ So once you've selected the appropriate edges, press `ctrl-E` and select _Mark S
 
 Then press `a` (it'll only unwrap the faces we've selected so, as we want the whole thing unwrapped, select everything), then press `u` and select _Unwrap_.
 
-**Important:** I got quite confused at various points doing this - nothing would appear to happen when I did an unwrap as I'd have selected edges but have forgotten to mark them as seams or I'd have forgotten to select everything, i.e. `a`, before doing the unwrap.
+**Important:** I got quite confused at _many_ points doing this - nothing would appear to happen when I did an unwrap as I'd have selected edges but have forgotten to mark them as seams or I'd have forgotten to select everything, i.e. `a`, before doing the unwrap.
 
-**Update:** if you're in _Object Mode_ then `a` will select all _objects_, it's only when you're in _Edit Mode_ that `a` selects all faces of the object that you're currently working on.
+**Update:** if you're in _Object Mode_ then `a` will select all _objects_, it's only when you're in _Edit Mode_ that `a` selects all faces of the object that's currently selected.
 
 Notes:
 
@@ -91,7 +105,9 @@ It turns out that this is just the six faces of the cube unwrapped into six unco
 
 Note: if you just drag vertices in the _UV Editor_ without first selecting an individual face in the _3D Viewport_ then you _sometimes_ end up dragging a vertex associated with more than one face. I'm unsure if such vertices are really shared or if it's multiple vertices sitting on top of each other and I'm selecting all of them at once.
 
-**Update:** I have since discovered situations where _Reset_ did resolve issues. I got myself into situations where unwrapping with _Follow Active Quads_ produced results with unexpected twists in the resulting map and doing _Reset_ and then redoing the unwrap resolved things (why, I don't know).
+**Update:** I have since discovered situations where _Reset_ did resolve issues. I got myself into situations where unwrapping with _Follow Active Quads_ produced results with unexpected twists in the resulting map and doing _Reset_ and then redoing the unwrap resolved things.
+
+**Update 2:** as noted elsewhere, _Reset_ works because it resolves any issues with the size and shape of the active element. See the documentation for [_Follow Active Quads_](https://docs.blender.org/manual/en/2.92/modeling/meshes/editing/uv.html#follow-active-quads) and in particular the note that says "it is the shape of the active quad in UV space that is being followed, not its shape in 3D space". It sounds, to me, as if just doing a normal _Unwrap_ first, instead of doing _Reset_, would work as well but it doesn't.
 
 ### UV checker board grid
 
@@ -141,6 +157,9 @@ Sometimes, it can be inconvenient that faces disappear in the _UV Editor_ if the
 
 ![img.png](uv-selection-sync.png)
 
+Mapping an existing image onto a 3D object
+------------------------------------------
+
 If you want to see how to take an existing image, like the cereal books, and use it as the image associated with an object and mapped via its UV map then watch this [video](https://youtu.be/GTd8NBg8EZU?t=1496) (the link is set to start at 24m 56s into the video where presenter starts talking about this after having created his UV map).
 
 ![img.png](cornflakes.png)
@@ -162,3 +181,83 @@ Note: in the video, the presenter fills the background of the image with black r
 And finally, a high-quality render:
 
 ![cereal render](render-cereal.png)
+
+Torus shapes
+------------
+
+As we've been working on a donut, the torus shape is important so let's take a look at it.
+
+### Default UV map
+
+Note: the default map, for any standard shape, is a little unusual in that, unlike the maps you create manually, there are no explicit seams on the 3D object that correspond to the edges of the map.
+
+For the torus, the top and bottom edges of the default map correspond to a circle around the inside of the hole, while the left and right edges correspond to a circle around the "tube" of the torus.
+
+![img.png](torus-default-uv-map.png)
+
+Aside: the default UV map of a torus always seems to include an odd non-orange-tinged face. I asked about that [here](https://blender.stackexchange.com/q/223588/124535) on the Blender StackExchange - it turns out this is the [_Active Element_](https://docs.blender.org/manual/en/2.92/editors/3dview/controls/pivot_point/active_element.html). The best explanation for it, that I've found, is [here](https://victorkarp.wordpress.com/2019/09/30/blender-der-unterschied-zwischen-active-und-selected/) in German (and [here](https://translate.google.com/translate?hl=&sl=de&tl=en&u=https://victorkarp.wordpress.com/2019/09/30/blender-der-unterschied-zwischen-active-und-selected/) translated reasonably well into English by Google Translate). Or this [video](https://www.youtube.com/watch?v=y3ECvX6DdNE&t=279s) (link set to start at 3m 39s where the presenter starts talking about the active element).
+
+**Update:** the active element actually is relevant to unwrapping when using _Follow Active Quads_ (discussed elsewhere). It's this element and its size and shape that determines the outcome of _Follow Active Quads_ unwrapping - when you get onto trying this form of unwrapping, try moving the corners of this element around, relative to each other, and see how it affects things.
+
+### Manually unwrapping a torus
+
+All the unwraps below feature a top to bottom seam around the "tube" of the torus - I won't mention it again, just take it as given.
+
+_Seam around inside of the hole._  
+![img.png](torus-unwrap-inside-edge.png)
+
+Just like any other object you can take this map and rotate, grab etc. until you've adjusted the map to your requirements, e.g. reshaping the map into the default regular shaped map seen above.
+
+_Seam around outside of the torus._  
+![img.png](torus-unwrap-outside-edge.png)
+
+_Seam around the top of the torus._  
+![img.png](torus-unwrap-top-edge.png)
+
+Aside: I've no idea why the resulting UV maps above don't have at least one axes of symmetry.
+
+The simplest arrangement, I think, is a circular seam around the inside of the hole and then instead of plain _Unwrap_, select one of the other unwrap options - _Follow Active Quads_.
+
+Unlike _Unwrap_, you don't automatically end up with a map that fits within the 0-to-1 space, to resolve this, select the whole map, go to the _UV_ menu, select _Pack Islands_ and then, in the _Pack Islands_ panel that temporarily appears at the bottom of the viewport, untick _Rotate_.
+
+![img.png](torus-unwrap-active-quads.png)
+
+Aside: traditionally, it seems, these little panels, that become available after you perform certain operations, have been called _operator panels_. Even if you've clicked or done something that causes it to disappear, you can get it back via _Adjust Last Operation_ in the _Edit_ menu.
+
+For more on scaling the map to fill the 0-to-1 space, see the cookbook section in the [`LEVEL-2.md`](LEVEL-2.md) on fixing issues with the donut's UV map.
+
+As noted elsewhere, depending on the active element, _Follow Active Quads_ can result in odd shapes, e.g. a map with a twist in it. The easiest way to resolve this is by going to the _UV_ menu, selecting _Reset_ and then redoing things.
+
+Note: look at the various maps above, if you look at those created with plain _Unwrap_, the difference in the dimensions of the faces that make up the map is clear - some are nearly square while others are much more stretched out along one or more sides. If you look at the 3D torus, it's clear that the faces of around the outside of the torus and far more square shaped than those along the inside of the hole. If you then use a map, like the one resulting from _Follow Active Quads_, where all the faces are the same size and then combine it with an existing image, it's important to consider the stretching that will result from the discrepancy between the sizes of the faces in the UV map and those on the 3D object. Issues like this can be seen with the massive stretching of the poles that occurs with the most popular world map projections.
+
+**Update:** if you add an image to a UV map then the 0-to-1 space is scaled to the dimensions of the image. So obviously this affects the proportions of the map (relative to the image). E.g. if you had a grid-like UV map where the rectangles of the grid were twice as high as they were wide but then added an image that's twice as wide as it is high then the rectangles of the grid will become proper squares relative to the image.
+
+### End
+
+We're basically done with this diversion, from the main donut series, into looking at UV maps and unwrapping.
+
+In [`LEVEL-2.md`](LEVEL-2.md), I provide a set of mechanical steps for resolving issues with the donut. If you follow these blindly, you should end up with a good UV map and, if you've read this page, you should have enough information to understand those steps or have enough pointers to research them further.
+
+The following are just my original notes taken while watching Andrew's brief discussion of this area in part 3 of level 2 of the donut series.
+
+### Original notes
+
+So, looking at things in the _Texture Paint_ workspace, we're interested in how the surface of the purple donut, in the right viewport, is unwrapped into the flat mesh seen in the left viewport.
+
+You can work on UV unwrapping by switching to the _UV Editing_ workspace. When I did this first, the donut just showed up as a grey with no mesh. If this is the case, just `tab` to _Object Mode_, select the donut and then `tab` back to _Edit Mode_.
+
+Once in the _UV Editing_ workspace, with the mesh successfully showing, you can select all the vertices of the donut. Initially, I did this by clicking and dragging to select an area covering the entire donut but I forgot to turn on x-ray - `alt-Z` - and got a very odd layout in the left-hand _UV Editor_:
+
+![img.png](uv-without-x-ray.png)
+
+With x-ray turned on, you get the full mesh:
+
+![img.png](uv-with-x-ray.png)
+
+However, it's worth noting that if you zoom in on the mesh that you'll see the elements of the mesh are taller than they are wide, i.e. they're stretched vertically:
+
+![img.png](stretched-grid.png)
+
+Compare this with the faces on the original donut - some of them are quite square and some of them are much longer along one side than the other. You can use `g`, `s` etc. to grab and move individual nodes or groups of nodes to reshape the mesh as you want - with differing effects on the distortion that would result if you laid down an existing photo on the unwrapped surface.
+
+![img.png](scale-uv-mesh.png)

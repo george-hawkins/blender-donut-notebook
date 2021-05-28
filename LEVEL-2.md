@@ -282,7 +282,9 @@ Select it, right-click and select _Shade Smooth_, then `g` and move it to where 
 
 Note: the existing sprinkles all share a common material, i.e. it's not simply duplicated with them. If you e.g. adjust the roughness for one then it affects all of them. The material isn't an attribute of an object - the material is a thing in its own right. When duplicating objects, you don't duplicate the material you simply duplicate a reference to it.
 
-The sphere doesn't share the material that the existing sprinkles all share - which is good as we want to give the balls one fixed color. With the sphere selected, go to _Material Properties_, click _New_ and give it a _Base Color_ with e.g. HSV 0.52, 0.55 and 0.9 for an aqua color. And give it a _Roughness_ value of about 0.24 to make it quite shiny.
+**Update:** if you have an object selected, are in _Edit Mode_ and then add an additional shape, it doesn't become an object in its own right - it becomes part of the existing object and, even though you can move the new shape around completely independently, it shares the material and other attributes of the existing object - i.e. it just becomes a disconnected part of the existing object's mesh.
+
+In any case, the sphere doesn't share the material that the existing sprinkles all share - which is good as we want to give the balls one fixed color. With the sphere selected, go to _Material Properties_, click _New_ and give it a _Base Color_ with e.g. HSV 0.52, 0.55 and 0.9 for an aqua color. And give it a _Roughness_ value of about 0.24 to make it quite shiny.
 
 Note that you can expand the preview section to get a quick higher-quality preview on how it'll look:
 
