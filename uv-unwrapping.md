@@ -201,6 +201,8 @@ Aside: the default UV map of a torus always seems to include an odd non-orange-t
 
 ### Manually unwrapping a torus
 
+When creating seams for the cube above, it was easy enough to shift-select the individual edges. For a torus, it's more convenient to select _edge loops_. If you hold down `Alt` while clicking a single edge with the `LMB` then this "selects a loop of edges that are connected in a line end-to-end, passing through the edge under the mouse pointer" (see the [documentation](https://docs.blender.org/manual/en/latest/modeling/meshes/selecting/loops.html)).
+
 All the unwraps below feature a top to bottom seam around the "tube" of the torus - I won't mention it again, just take it as given.
 
 _Seam around inside of the hole._  
@@ -238,7 +240,9 @@ We're basically done with this diversion, from the main donut series, into looki
 
 In [`LEVEL-2.md`](LEVEL-2.md), I provide a set of mechanical steps for resolving issues with the donut. If you follow these blindly, you should end up with a good UV map and, if you've read this page, you should have enough information to understand those steps or have enough pointers to research them further.
 
-The following are just my original notes taken while watching Andrew's brief discussion of this area in part 3 of level 2 of the donut series.
+Note: I asked a question on the Blender StackExchange about resolving the UV map issue that I'd experienced. I got an interesting [answer](https://blender.stackexchange.com/a/223516/124535) from Marty Fouts. For the donut situation, I think my cookbook approach is the easiest way to resolve things but Marty's answer covers some interesting things that aren't covered here. In particular, he points out that the _Image Texture_ node has a projection field that defaults to _Flat_ but can be switched to e.g. _Tube_. I experimented with this, both with mapping an existing image onto a torus and when painting directly onto the 3D torus object, but just got myself totally confused as to what _Tube_ projection achieved.
+
+The following are just my original notes taken while watching Andrew's brief discussion of UV unwrapping in part 3 of level 2 of the donut series. They largely just repeat things that are better covered above.
 
 ### Original notes
 
