@@ -412,6 +412,10 @@ If you don't see any issues then great - as Andrew says, you just need to be awa
 * Then press `.` (the normal `.` key, not the one on the NumPad) to bring up the _Pivot Point_ pie menu and switch from _Bounding Box Center_ to _2D Cursor_.
 * Then press `s` and scale the map to fill the underlying image.
 
+**Update:** even after doing these steps, I found I could still run into issues - so paint on the donut and check for problems. I found coming back to the _UV Editor_, shrinking down the mesh (with `s`), dragging it into the lower-left corner (with _Constrain to Image Bounds_ still on) and then scaling again to fill the space resolved things. All I can think is that the mesh extended slightly over the edge of the space resulting in wrap-around and overlap, i.e. any painting just at the edge of the space ending up duplicated onto portions of the left-most and right-most faces of the mesh.
+
+Here's the process again in pictures:
+
 _1. Paint everything black again._  
 ![img.png](cookbook-uv-fix-1.png)
 
@@ -447,17 +451,23 @@ Establish a base color for the image - press `n` to pop out the side menu, then 
 
 Note: I didn't have _Smooth Stroke_ (or _Stablize Stroke_ as it seems to be called in Blender 2.92) turned on but my drawing was still extremely slow. Turning off _Anti-Aliasing_ does help a bit. It seems many people experience something similar - and other than reducing your brush size nothing definitely seems to help.
 
-Now we want to paint a white belt around the donut. Pop out the menu again with `n` and swap the colors (the little "cycle" icon to the right of the two colors or press `x`) to make black the primary color and then adjust it to be white (just set the V of HSV to 1). In the same menu, set _Radius_ to 50px and _Strength_ to 0.3.
+Now we want to paint a white belt around the donut. Pop out the menu again with `n` and swap the colors (the little "cycle" icon to the right of the two colors or press `x`) to make black the primary color and then adjust it to be white (just set the V of HSV to 1). In the same menu, set _Radius_ to 90px and _Strength_ to 0.3.
 
 Note: from then on `x` is really useful for switching between the primary and secondary color (so you can fix up places where you went to far with one color or the other).
 
-Try drawing on the white belt directly - it's fairly clear it's painted on (with a stylus and brush pressure you could achieve a better result). We want reduce the artificial appearances of the flat brush stroke.
+Try drawing on the white belt directly - it's fairly clear it's painted on (with a stylus and brush pressure you could achieve a better result). We want to reduce the artificial appearances of the flat brush stroke.
 
-Go to _Texture Properties_ (the very last of the properties tabs), click _New_ and select _Clouds_ (one of the built-in textures) from the _Type_ dropdown. Andrew then also increases the _Size_ value from 0.25 to 0.65 - you can see the result of this in the _Preview_ area (he says it makes things more varied but as you can see it reduces the amount of detail):
+First, in the _Image Editor_ viewport, pop out the side menu again and expand the _Texture Mask_ area (**not** the _Texture_ area above it). Click the checkerboard pattern, select _New_ and you end up with a black texture with a name like "Texture.001":
 
-![img.png](brush-texture.png)
+![img_1.png](new-brush-texture.png)
 
-Then over _Image Editor_ viewport, pop out the side menu again and expand the _Texture Mask_ area (**not** the _Texture_ area above it). Click the checkerboard pattern, select the cloud texture you just created and change the _Mask Mapping_ value from _Tiled_ to _Random_.
+Then go to _Texture Properties_ (the very last of the properties tabs), change from _Brush_ to _Brush Mask - Texture.001_, click _New_ and select _Clouds_ (one of the built-in textures) from the _Type_ dropdown. Andrew then also increases the _Size_ value from 0.25 to 0.65 - you can see the result of this in the _Preview_ area (he says it makes things more varied but as you can see it reduces the amount of detail):
+
+![img.png](brush-mask-texture.png)
+
+Note: I kept missing that one had to switch from _Brush_ to _Brush Mask_ above - the two result in quite different effects.
+
+Then switch back to the side menu in the _Image Editor_ viewport and change the _Mask Mapping_ value from _Tiled_ to _Random_.
 
 ![img.png](texture-mask.png)
 
@@ -467,18 +477,104 @@ Note: in the _Brushes_ section of the side menu, you can add and name additional
 
 Don't forget about the inside of the donut hole - paint a belt around it too. It's a little trickier to get at.
 
-![img.png](completed-belt.png)
+![img.png](completed-belt.png) 
+
+Note: if you pop out the side menu with `n`, go to the _View_ tab and change the _Clip Start_ value to ~10cm then painting the inside of the hole is much easier.
+
+I found I got the best painting result with click, then a stroke forward and back and then release and rotate. And then a little correcting at the edges by toggle the color with `x` and reducing the brush size.
 
 ### Darkening the donut
 
 We've used the brush and texture to introduce a lighter colored belt around the donut. Now to use the texture darken up and get rid of the flatness of the color of the rest of the donut.
 
-To do this, increase the brush size to e.g. 180px, make sure white is the primary color and change it to black (V value of 0). If you paint on the donut now - you'll paint a cloudy black color which isn't what we want. Instead, change the brush _Blend_ type from _Mix_ to _Overlay_ - this, instead of painting over the existing color, will reduce its brightness, i.e. make it darker (essentially adjust the V value of the existing color).
+To do this, increase the brush size a little, make sure white is the primary color and change it to black (V value of 0). If you paint on the donut now - you'll paint a cloudy black color which isn't what we want. Instead, change the brush _Blend_ type from _Mix_ to _Overlay_ - this, instead of painting over the existing color, will reduce its brightness, i.e. make it darker (essentially adjust the V value of the existing color).
 
-At this point, I noticed something that I hadn't seen (but was also there) when painting the white belt. An odd seam corresponding to the edge of the image:
+It was at this point that I noticed something that I hadn't spotted when painting the white belt. An odd seam corresponding to the edge of the image:
 
 ![img.png](bad-seam.png)
 
-Go to _Object Data Properties_, expand _UV Maps_ and press minus to remove the existing map and then plus to add a new one. Then in the _UV Editing_ workspace, select the whole donut mesh, then right-click on the white square in the _UV Editor_ and select _Follow Active Quads_. Switch to the _Texture Paint_ workspace and add a new image (as before) with a new name, go to the _Shading_ workspace and select this new image in the _Image Texture_ node.
+It was here that I had to learn all about UV unwrapping (the cookbook steps covered above).
 
-TODO: note that you don't have to delete or reset - you can just unwrap again.
+Eventually, I got everything sorted out and redid the painting:
+
+![img.png](painted-donut.png)
+
+The resulting high-quality render:
+
+![painted render](render-painted.png)
+
+Level 2, part 4 - procedural displacement
+-----------------------------------------
+
+Still with the icing hidden, for the moment, and with the donut selected, go to the _Shading_ workspace.
+
+In the _Shader Editor_ (where the nodes are), press `shift-A` and, under _Texture_, select _Noise Texture_:
+
+![img.png](noise-texture.png)
+
+Blender ships with a whole-load of add-ons, both official and community developed ones, but you have to enable each one that you want to use. We want to use a community developed one called "Node Wrangler". Go to the _Preferences_, under the main _Edit_ menu, select the _Add-ons_ tab and, in the search box, search for "wrangler". Then tick the checkbox for this addon:
+
+![img.png](node-wrangler-addon.png)
+
+Aside: you can find its documentation [here](https://docs.blender.org/manual/en/2.92/addons/node/node_wrangler.html).
+
+Now, we can `ctrl-shift-LMB` on the _Noise Texture_ node that we just created, this quickly wires in a _Viewer_ node, wires its output to the final _Material Output_ node (disconnecting the existing input) and wires the first output of the _Noise Texture_ node through to the _Viewer_ node. This allows you to preview the texture that results from this node (for slightly more details see the [documentation](https://docs.blender.org/manual/en/2.92/addons/node/node_wrangler.html#shader-viewer) for this operation).
+
+Aside: to get things back to how they were, just `ctrl-shift-LMB` on the main _Principled BSDF_ node.
+
+When you `ctrl-shift-LMB` on the _Noise Texture_ node, you see the effect of the _Fac_ (factor) output, `ctrl-shift-LMB` the node again and it switches to the next output, i.e. _Color_. It's interesting to see the result but it's actually _Fac_ that we want so `ctrl-shift-LMB` to get back to it again.
+
+Note: the order of the _Fac_ and _Color_ outputs seems to have changed between Blender 2.8 and 2.9.
+
+![img.png](fac-output.png)
+
+We want to use the black and white cloud texture output by _Fac_ to drive the bumpiness and color of our material.
+
+Now, try adjusting the _Scale_ value up and down. At about 25 the donut looks like this:
+
+![img.png](scale-25-before.png)
+
+Due to the way that the node output is mapped (which is related to UV mapping or anything) things are stretched top-to-bottom relative to left-to-right so there's less detail top-to-bottom (to be honest I find it hard to see exactly what's being talked about here - if I'd had to guess I would have said things are _perhaps_ somewhat stretched left-to-right).
+
+Anyway, the best way to fix that is to press `shitf-A` and, under _Input_, select _Texture Coordinate_. Then wire its _Object_ output to the _Vector_ input of the _Noise Texture_ node and up the scale to about 320.
+
+Andrew says this causes the _Noise Texture_ to "use the object data, which is most appropriate for procedural textures". Quite what this means, I'm unsure.
+
+![img.png](texture-coordinate-result.png)
+
+We're going to use this effect as the bump of our material, i.e. actually change the shape of our mesh (Andrew says there's also another form of bump that he calls "fake bump" but doesn't say anything more about it).
+
+We want the noise texture to generate a displacement (white means more and black less), so press `shift-A` and, under _Vector_, select _Displacement_. Now, connect the _Fac_ output of the _Noise Texture_ to the _Height_ input of the _Displacement_ node and connect its _Displacement_ output to the _Displacement_ input of the _Material Output_. And finally, `ctrl-shift-LMB` the _Principled BSDF_ node to make it, once again, the node that's wired through to the _Surface_ input of the _Material Output_ node.
+
+![img.png](bump-node-setup.png)
+
+Then in the _3D Viewport_ you can see the result. Andrew is using Blender 2.8 and hardly sees any bumpiness with _Material Preview_ viewport shading (what he calls LookDev) but in 2.9, it's a lot more noticeable. However, it does look a lot better if you switch to _Rendered_ viewport shading:
+
+![img.png](bumps-rendered-view.png)
+
+It turns out that what we've done so far is "fake bump" - while the surface looks bumpy, if you look at the edges, i.e. the boundary between donut and background, you'll see they're still as smooth as they always were - there's no bumpiness in the mesh.
+
+Aside: Andrew says real "fake bump" would be achieved using the _Normal_ input of the _Principled BSDF_ node but essentially the effect is the same.
+
+So we want to actually displace the shape of our mesh - go to _Material Properties_, expand the _Settings_ section and change the _Displacement_ dropdown from _Bump Only_ to _Displacement and Bump_. This result is a fairly shocking transformation, if you zoom out you'll see something like this:
+
+![img.png](bad-bump-displadement-scale.png)
+
+This is due to the scaling applied by the _Displacement_ node, go to its _Scale_ field and adjust its value down from 1.0 to 0.003. Now, the donut looks recongnisable again and you can also see bumpiness around the edges:
+
+![img.png](scaled-bump-displacement.png)
+
+Andrew notes that the bumpiness depends on the how fine your mesh is - if you haven't got enough vertices then you won't see the desired level of detail, it'll look kind of spiky. To fix this you would go to _Modifier Properties_ and add in a _Subdivision Surface_ modifier. 
+
+The high bumpiness was useful, so we could see what was going on. But for a more donut like fine texture, adjust the _Scale_ value, of the _Noise Texture_ node, up to 1500.
+
+Note: initially, on increasing the _Scale_ value, I thought I was only getting bumps on the side of the donut furthest away from the light source but it's just the light source washing out the shadows of the bumps on the side closest to it.
+
+The resulting dough looks a lot less artificial now but (in my opinion) looks more bread than donut at the moment:
+
+![render displacement](render-produral-displacement.png)
+
+Level 2, part 5 - final donut
+-----------------------------
+
+...
