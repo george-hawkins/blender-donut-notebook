@@ -688,3 +688,54 @@ _Without the large lumps at all._
 ![no large lumps](render-final-donut-no-large-lumps.png)
 
 As you can see, each effect is quite subtle but, comparing the first and last render, combined you end up with a much better looking donut.
+
+### Potential improvements
+
+Andrew now goes through various things you can try to improve the look of your donut or make it more dramatically your _own_ donut (as opposed to being a copy of his). Switch to the _Layout_ workspace with _Rendered_ viewport mode, and with the icing etc. included but with the environment excluded, try the following things.
+
+Size and count of the sprinkles - with the icing select, go to _Particle Properties_ and try messing with the _Scale_ and _Number_ values.
+
+![img.png](fewer-but-larger-sprinkles.png)
+
+Note: toggle off _Show Overlays_ - `alt-shift-Z` - to see things without selected highlighting etc.
+
+Select the ball and scale it up with `s` so it's much larger relative to the other sprinkles.
+
+![img.png](super-sized-balls.png)
+
+Make the sprinkles less uniformly distributed - in the real world, you'd never sprinkle them perfectly across the surface. Previously, we just used the weight painting to stop them appearing on the steep edges of the icing.
+
+Press `alt-shift-Z` to toggle on _Show Overlays_, select the icing again, press `z` and switch to _Solid_ viewport mode, press `ctrl-tab` and select the _Weight Painting_ mode and press `7` on the NumPad to get a top view. Set your brush to radius 100px and strength 0.6 and make more of the surface less favorable to sprinkles.
+
+![img.png](random-weight-paint.png)
+
+Note: without _Show Overlays_ on, you won't see the weight paint and without x-ray mode off you won't see the sprinkles.
+
+The result is fair less regularly distributed sprinkles:
+
+![img.png](irregular-sprinkle-distribution.png)
+
+Subsurface scattering and icing color - select the icing, go to the _Material Properties_ and try messing with the _Base Color_ and _Subsurface_ values. When changing the _Base Color_, try changing the _Subsurface Color_ too or leave it alone to see its contribution.
+
+![img.png](subsurface-and-color-changes.png)
+
+If you overdid the white belt around the donut and don't want to redo the painting a quick fix is to select the donut dough (not the icing) and go to the _Shading_ workspace and add in a _MixRGB_ node between the _Image Texture_ node and the _Overlay_ node and set its _Color 2_ value to the same color as the original base color of the donut (e.g. HSV 0.08, 0.44 and 0.9). Then drag the _Fac_ value up and down - the higher the value the less the white of the belt will show through and the more the color is dominated by the flat base color.
+
+![img.png](white-belt-correction.png)
+
+Personally, I think weight paint changes are the most interesting - here's a render with less regular weight painting:
+
+![irregular weight painting](render-irregular-weight-paint.png)
+
+And changing the base and subsurface colors is an easy way to make it distinctive.
+
+### Bonus fun feature
+
+Make the icing radioactive by selecting it, going to _Material Properties_ and change the _Emission_ value from black to something bright and saturated, i.e. adjust the brightness up to max (V of 1) and the saturation to high (e.g. S of 0.8) and whatever hue you like (e.g H of 0.34 for green). As well as look weird and radioactive, look at glow around the edge of the icing and how it affects the color of the dough there.
+
+![radio active](render-radioactive.png)
+
+Level 3
+-------
+
+OK - that's it for level 2. Level 3 continues [here](LEVEL-3.md).
