@@ -10,7 +10,7 @@ You need to use the proprietary Nvidia driver to get the most out of your CUDA c
 
 However, even if you opted to install these drivers when setting up your system (or later), it turns out that the usual `apt` update process does not keep the Nvidia driver up-to-date.
 
-So to get everything up-to-date:
+So get `apt` up-to-date and then list the latest available drivers:
 
     $ sudo apt full-upgrade
     $ ubuntu-drivers devices
@@ -112,6 +112,11 @@ However, I've disabled it - let's see if it makes any difference:
 
     $ sudo systemctl disable nvidia-resume.service
 
+Newer cards
+-----------
+
+The above setup (just using my `nvidia-setup.sh` script) all worked far better when I switched to a much newer Nvidia card, i.e. from a GT 730 to an RTX 2060.
+
 Poor performance after resuming from suspend
 --------------------------------------------
 
@@ -153,6 +158,6 @@ I found that just reloading `nvidia_uvm` (as above) worked but others reloaded m
     drm                   552960  9 drm_kms_helper,nvidia_drm
     i2c_nvidia_gpu         16384  0
 
-I.e. `nvidia_uvm` and `i2c_nvidia_gpu` here, then rerun `lsmod` and see which of the remaining have now also got a zero use count and repeat the process until all our unloaded and then reload them in the reverse order.
+I.e. `nvidia_uvm` and `i2c_nvidia_gpu` here, then rerun `lsmod` and see which of the remaining have now also got a zero use count and repeat the process until all are unloaded and then reload them in the reverse order to which you unloaded them.
 
 Others have had luck with different subsets, e.g. see [here](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-301058363), [here](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-304442181) and [here](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-312679773). But note these comments are on a Tensorflow thread where people may not be so interested in keeping the display alive if the card is also being used for it.

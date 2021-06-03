@@ -3,7 +3,7 @@ Blend modes
 
 If you look at the Blender documentation for [blend modes](https://docs.blender.org/manual/en/latest/editors/texture_node/types/color/mix_rgb.html?highlight=mixrgb#properties), it doesn't explain them but instead likes to a glossary entry that itself just links to the Gimp [layer modes](https://docs.gimp.org/en/gimp-concepts-layer-modes.html) documentation.
 
-But this isn't terribly helpful as, for whatever reason, Blender has settled on different names for these modes to tools like Gimp and Photoshop.
+But this isn't terribly helpful as, for whatever reason, Blender has settled on different names for these modes to those used in tools like Gimp and Photoshop.
 
 Thankfully Yevgeny Makarov provides a mapping between the Blender names and the names commonly used elsewhere (in this [post](https://devtalk.blender.org/t/solved-blend-modes-naming-inconsistency/8006) about the inconsistencies). Some of the inconsistencies have been resolved since Yevgeny's post - this table shows the naming now used in Blender 2.9:
 
@@ -30,7 +30,7 @@ Thankfully Yevgeny Makarov provides a mapping between the Blender names and the 
 | Color | Color |
 | Value | Luminosity |
 
-As you can see, there are only a few inconsistencies now:
+As you can see, there are only a few inconsistencies left now:
 
 | Blender | Photoshop |
 |--------|--------|
@@ -49,4 +49,4 @@ YouTube
 
 There are no end of videos on YouTube about blend modes - e.g. this [one](https://www.youtube.com/watch?v=QfGKdsz1pVM) from someone who usually focuses on Blender (but in this video treats blending as a general topic) or this [crash course](https://www.youtube.com/watch?v=EroAHgpsP_I) for blend modes in Photoshop or this more detailed [one](https://www.youtube.com/watch?v=zGTbOfhyXnA) (that just covers four modes).
 
-Some just look at the mechanics of what each mode does without making it clear when and why you might use a particular mode. Some explain the maths of what's going on (which I find helpful). So just find whatever works for you.
+Some videos just look at the mechanics of what each mode does without making it clear when and why you might use a particular mode. Some explain the maths of what's going on (which I find helpful). So just find whatever works for you.

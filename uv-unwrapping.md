@@ -1,7 +1,7 @@
 UV maps and UV unwrapping
 =========================
 
-First - UV maps and unwrapping are much simpler than it initially seems. Just stick with it for a while and you'll quickly reach a point where it all seems fairly obvious. We already briefly came across the term _UV_ when adding the first _UV Sphere_.
+First - UV maps and unwrapping are much simpler than it initially seems. Just stick with it for a while and you'll quickly reach a point where it all seems fairly obvious.
 
 A UV map determines how a 2D image is mapped onto a 3D object (and vice-versa - if your 3D object's surface is mapped to a 2D image and you paint directly onto the 3D object then the UV map will determine how that appears on the flat 2D image).
 
@@ -17,6 +17,7 @@ A set of seams need to be specified for your 3D object such that it can be cut o
 
 You can also think of this process as taking the surface of the object and, making the minimum number of cuts, pealing it off and laying it down flat, i.e _unwrapping_ the object.
 
+The UV map is a mesh - a collection of faces.
 If the UV map is laid out over an image then the area of the image covered by a particular face of the map will be mapped to the corresponding face of the 3D object.
 
 If the size of the face in the UV map perfectly matches the size of the face on the 3D object then no distortion will occur. Achieving this correspondence of sizes is easy with shapes like cubes. However, it's much harder with shapes like spheres - you have to decide e.g. if you want a UV map that's easy to work with but requires a lot of distortion in the underlying 2D image or a much more complex UV map which, while reducing the requirement for distortion, increases the complexity of how things are laid out on the 2D image.
@@ -58,7 +59,7 @@ If you go to _Object Data Properties_ and expand _UV Maps_, you see the default 
 
 ![img.png](default-uvmap.png)
 
-**Important:** the left-hand _UV Editor_ only shows the _faces_ that are currently selected in the right-hand _3D Viewport_. So, if you've got nothing select in the _3D Viewport_ (use `alt-A` to unselect all) then everything disappears in the _UV Editor_. Or try just selecting a single face and you'll just see that face in the _UV Editor_. This confused me initially.
+**Important:** remember that the left-hand _UV Editor_ only shows the _faces_ that are currently selected in the right-hand _3D Viewport_. So, if you've got nothing selected in the _3D Viewport_ (use `alt-A` to unselect all) then everything disappears in the _UV Editor_. Or try just selecting a single face and you'll just see that face in the _UV Editor_. This confused me initially.
 
 Note: when adding an object, it is possible to disable to automatic generation of a UV map by unticking _Generate UVs_ but I don't see any reason to do this:
 
@@ -72,7 +73,7 @@ Switch to _UV Editing_ and, in the right-hand _3D Viewport_, switch from the def
 
 ![img.png](edge-select.png)
 
-Then think about the edges, you'd cut along with a box cutter if you wanted to lay it out flat as a t-shape (rather than the default cross shape seen above).
+Then think about the edges, you'd cut along with a box cutter if you wanted, for this exercise, to lay it out flat as a t-shape (rather than the default cross shape seen above).
 
 ![img.png](box-cutter.png)
 
@@ -94,7 +95,7 @@ Then press `a` (it'll only unwrap the faces we've selected so, as we want the wh
 
 Notes:
 
-* Some tutorials suggest deleting the existing UV map, i.e. go to _Object Data Properties_ and press minus for the existing map. This isn't necessary - when you select _Unwrap_, you're completely resetting the map to match the seams and faces that you've currently selected. But it doesn't do any harm - when you press _Unwrap_ for the first time after deleting the existing map, it'll automatically create a new map. And perhaps it's less confusing, for some, not to see the existing map when working to produce a new one. You can do more complex unwraps that consist of lots of separate components - in this context deleting the existing map, to completely start from scratch, _may_ be more useful.
+* Some tutorials suggest deleting the existing UV map, i.e. go to _Object Data Properties_ and press minus for the existing map. This isn't necessary - when you select _Unwrap_, you're completely resetting the map to match the seams and faces that you've currently selected. But it doesn't do any harm to delete the map - when you press _Unwrap_ for the first time after deleting the existing map, it'll automatically create a new map. And perhaps it's less confusing, for some, not to see the existing map when working to produce a new one. You can do more complex unwraps that consist of lots of separate components - in this context deleting the existing map, to completely start from scratch, _may_ be more useful.
 * Some tutorials suggest going to the _UV_ menu in either the _UV Editor_ or the _3D Viewport_ and selecting _Reset_. This makes even less sense that deleting the existing map - all it does is reset all the faces so that they lie in a stack on top of each other - try it with the cube - you end up with an oddly greyed out area with four vertices in the _UV Editor_:
 
 ![img.png](un-reset-cube.png)
@@ -107,19 +108,19 @@ Note: if you just drag vertices in the _UV Editor_ without first selecting an in
 
 **Update:** I have since discovered situations where _Reset_ did resolve issues. I got myself into situations where unwrapping with _Follow Active Quads_ produced results with unexpected twists in the resulting map and doing _Reset_ and then redoing the unwrap resolved things.
 
-**Update 2:** as noted elsewhere, _Reset_ works because it resolves any issues with the size and shape of the active element. See the documentation for [_Follow Active Quads_](https://docs.blender.org/manual/en/2.92/modeling/meshes/editing/uv.html#follow-active-quads) and in particular the note that says "it is the shape of the active quad in UV space that is being followed, not its shape in 3D space". It sounds, to me, as if just doing a normal _Unwrap_ first, instead of doing _Reset_, would work as well but it doesn't.
+**Update 2:** as noted elsewhere, _Reset_ works because it resolves any issues with the size and shape of the active element. See the documentation for [_Follow Active Quads_](https://docs.blender.org/manual/en/2.92/modeling/meshes/editing/uv.html#follow-active-quads) and in particular the note that says "it is the shape of the active quad in UV space that is being followed, not its shape in 3D space".
 
 ### UV checker board grid
 
 Sometimes you want to paint directly onto the object in the _3D Viewport_, in which case the relationship between the size of the faces in the _3D Viewport_ and the size of the faces seen in the _UV Editor_ isn't so important.
 
-However, if you're planing to take an existing image and associate it with the UV map in the _UV Editor_ then if there's a mismatch between the size of the faces there and those seen in the _3D Editor_.
+However, if you're planing to take an existing image and associate it with the UV map in the _UV Editor_ then if there's a mismatch between the size of the faces there and those seen in the _3D Viewport_, you'll see resulting distortion.
 
 An easy way to check for size mismatches, before using your real image, is to use the predefined _UV Grid_. If you've unwrapped a cube as shown above then, in the _UV Editor_, select _New_, enter e.g. "Checker pattern" for the _Name_ and select _UV Grid_ for the _Generated Type_ and leave the rest unchanged:
 
 ![img.png](checker-pattern.png)
 
-Then switch to the _Shading_ workspace, and in the _Shader_ editor (where the nodes are, assuming you've got the cube selected), press `shift-A` and, under _Texture_, select _Image Texture_. In the new node, click the image dropdown (to the left of _New_), select "Checker pattern" and then connect the nodes _Color_ output to the input for _Base Color_.
+Then switch to the _Shading_ workspace, and in the _Shader_ editor (where the nodes are, assuming you've got the cube selected), press `shift-A` and, under _Texture_, select _Image Texture_. In the new node, click the image dropdown (to the left of _New_), select "Checker pattern" and then connect the node's _Color_ output to the input for _Base Color_.
 
 ![img.png](checker-pattern-node.png)
 
@@ -171,7 +172,7 @@ If you look carefully at the status bar above, you'll see that it actually warns
 
 Note: I find it odd that it warns you about this but if you forget to mark any seams (and just assume it'll use the implicit seams that were used for the default UV map) then there's no warning - it just does nothing (leaving you with the unchanged default UV map).
 
-If you notice as odd mismatch between the size of things in the UV map relative to the object then this is probably the issue. To resolve it, `tab` to _Object Mode_ and select _Apply_ under the _Object_ menu in the _3D viewport_ (or just press `ctrl-A`) and select _All Transforms_ (or e.g. just _Scale_ if it's the only issue). Then `tab` back to _Edit Mode_, select all vertices with `a` and then `u` and _Unwrap_. You end up with something more like you'd expect:
+If you notice as odd mismatch between the size of things in the UV map relative to the object then this is probably the issue. To resolve it, `tab` to _Object Mode_ and go to the _Apply_ submenu in the _Object_ menu of the _3D viewport_ (or just press `ctrl-A`) and select _All Transforms_ (or e.g. just _Scale_ if it's the only issue). Then `tab` back to _Edit Mode_, select all vertices with `a` and then `u` and _Unwrap_. You end up with something more like you'd expect:
 
 ![img.png](unwrap-scaling-applied.png)
 
@@ -219,7 +220,7 @@ Aside: the default UV map of a torus always seems to include an odd non-orange-t
 
 ### Manually unwrapping a torus
 
-When creating seams for the cube above, it was easy enough to shift-select the individual edges. For a torus, it's more convenient to select _edge loops_. If you hold down `Alt` while clicking a single edge with the `LMB` then this "selects a loop of edges that are connected in a line end-to-end, passing through the edge under the mouse pointer" (see the [documentation](https://docs.blender.org/manual/en/latest/modeling/meshes/selecting/loops.html)).
+When creating seams for the cube above, it was easy enough to shift-select the individual edges. For a torus, it's more convenient to select _edge loops_. If you hold down `alt` while clicking a single edge with the `LMB` then this "selects a loop of edges that are connected in a line end-to-end, passing through the edge under the mouse pointer" (see the [documentation](https://docs.blender.org/manual/en/latest/modeling/meshes/selecting/loops.html)).
 
 All the unwraps below feature a top to bottom seam around the "tube" of the torus - I won't mention it again, just take it as given.
 
@@ -248,7 +249,7 @@ For more on scaling the map to fill the 0-to-1 space, see the cookbook section i
 
 As noted elsewhere, depending on the active element, _Follow Active Quads_ can result in odd shapes, e.g. a map with a twist in it. The easiest way to resolve this is by going to the _UV_ menu, selecting _Reset_ and then redoing things.
 
-Note: look at the various maps above, if you look at those created with plain _Unwrap_, the difference in the dimensions of the faces that make up the map is clear - some are nearly square while others are much more stretched out along one or more sides. If you look at the 3D torus, it's clear that the faces of around the outside of the torus and far more square shaped than those along the inside of the hole. If you then use a map, like the one resulting from _Follow Active Quads_, where all the faces are the same size and then combine it with an existing image, it's important to consider the stretching that will result from the discrepancy between the sizes of the faces in the UV map and those on the 3D object. Issues like this can be seen with the massive stretching of the poles that occurs with the most popular world map projections.
+Note: look at the various maps above, if you look at those created with plain _Unwrap_, the difference in the dimensions of the faces that make up the map is clear - some are nearly square while others are much more stretched out along one or more sides. If you look at the 3D torus, it's clear that the faces around the outside of the torus are far more square shaped than those along the inside of the hole. If you then use a map, like the one resulting from _Follow Active Quads_, where all the faces are the same size and then combine it with an existing image, it's important to consider the stretching that will result from the discrepancy between the sizes of the faces in the UV map and those on the 3D object. Issues like this can be seen with the massive stretching of the poles that occurs with the most popular world map projections.
 
 **Update:** if you add an image to a UV map then the 0-to-1 space is scaled to the dimensions of the image. So obviously this affects the proportions of the map (relative to the image). E.g. if you had a grid-like UV map where the rectangles of the grid were twice as high as they were wide but then added an image that's twice as wide as it is high then the rectangles of the grid will become proper squares relative to the image.
 
