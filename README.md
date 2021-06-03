@@ -168,7 +168,7 @@ And then drag and select the top-third of the donut:
 
 ![img.png](top-third.png)
 
-Now `shitf-D` to duplicate the selected vertices, if you move the mouse you'll now drag this duplicated mesh around. If you do that press `esc` to cancel the move.
+Now `shift-D` to duplicate the selected vertices, if you move the mouse you'll now drag this duplicated mesh around. If you do that press `esc` to cancel the move.
 
 Note: when you use `shift-D`, you also automatically grab the duplicated mesh - we don't want that so either click (without moving) or press `esc` to release the object. You won't be able to press `p` (next step) until you do so.
 
@@ -585,7 +585,7 @@ You can turn them off by unselecting the _Show Overlays_ icon (solid disc offset
 
 ![img.png](overlay-off.png)
 
-**Important:** toggling off _Show Overlays_ hides a lot of things - in later steps I got confused as to why I wasn't seeing something I expected to see and it turned out it was being hidden because _Show Overlays_ was off.
+**Important:** toggling off _Show Overlays_ hides a lot of things - in later steps I got confused as to why I wasn't seeing something I expected to see, e.g. the orange outline indicating that something was selected, and it turned out it was being hidden because _Show Overlays_ was off.
 
 ### Donut material
 

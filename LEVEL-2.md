@@ -6,11 +6,11 @@ This carries on my notebook for the [Blender donut tutorial](https://www.youtube
 Level 2, Part 1 - particles
 ---------------------------
 
-Return to the _Layout_ workspace if you're still in _Compositing_ and to the simple _Solid_ _Viewport Shading_ rather than _Rendered_.
+Return to the _Layout_ workspace if you're still in _Compositing_ and to the simple _Solid_ viewport shading rather than _Rendered_.
 
 ### Organize your Outliner
 
-The _Scene Collection_ (upper-right corner) is actually part of the _Editor Type_ called _Outliner_. We already created the _Archive_ collection there that we can exclude from the view layer. So let's do the same for everything else and clean up the _Outliner_ to make everything more manageable:
+The _Scene Collection_ (upper-right corner) is actually part of the _Editor Type_ called _Outliner_. We already created the "Archive" collection there so that we could exclude it from the view layer. So let's do the same for everything else and clean up the _Outliner_ to make everything more manageable:
 
 * Select both donut and icing, add press `m` (for move) and add a _New Collection_ that's also called "Donut" - this seems a bit stupid, i.e. a collection with a single thing in it, but we can exclude the collection from the view layer (via the checkbox beside the eye icon) as well as just hiding it (the eye icon). An excluded item is excluded from any render whereas a hidden item is just hidden in the viewport.
 * Select the plane and add it to a new collection called "Environment".
@@ -28,7 +28,7 @@ Even if you select the donut parent in the _Scene Collection_, you still also ha
 
 First exclude all collections (Andrew says "hide" but he means exclude), i.e. untick the checkboxes for the "Camera and light", "Donut" and "Environment" collections.
 
-First, `shift-A` and under _Mesh_, add a _UV Sphere_ (what U and V mean is a little complicated, see the Wikipedia [_UV mapping_](https://en.wikipedia.org/wiki/UV_mapping) page and for the difference, again quite complicated, between _UV Sphere_ and _Icosphere_, see this StackExchange [question](https://blender.stackexchange.com/q/72)). Then before you click away, go to the _Add UV Sphere_ dialog (lower-right) and change the _Radius_ from 1m to 1mm and adjust down _Segments_ to 12 and _Rings_ to 6 (otherwise your render times will be terrible once you've got hundreds of sprinkles on your icing).
+First, `shift-A` and under _Mesh_, add a _UV Sphere_ (what U and V mean is a little complicated, see the Wikipedia [_UV mapping_](https://en.wikipedia.org/wiki/UV_mapping) page and for the difference, again quite complicated, between _UV Sphere_ and _Icosphere_, see this StackExchange [question](https://blender.stackexchange.com/q/72)). Then before you click away, go to the _Add UV Sphere_ operator panel (lower-right) and change the _Radius_ from 1m to 1mm and adjust down _Segments_ to 12 and _Rings_ to 6 (otherwise your render times will be terrible once you've got hundreds of sprinkles on your icing).
 
 **Note:** clipping came up before very early on, here when I zoomed in on the sphere it disappeared as I got close. This can be resolved by pressing `n` to pop out the side menu, selecting the _View_ tab and changing the _Clip Start_ to 1mm. Make sure you're not in camera view as it has its own clipping settings and will still clip even if you adjust _Clip Start_.
 
@@ -36,13 +36,13 @@ Unexclude the "Donut" collection, press `Numpad-0` (front view), select the sphe
 
 ![img.png](donut-and-sphere.png)
 
-`tab` into _Edit Mode and toggle on x-ray - `alt-Z` - and select the top half of the sphere. Then `g` and try moving it:
+`tab` into _Edit Mode_ and toggle on x-ray - `alt-Z` - and select the top half of the sphere. Then `g` and try moving it:
 
 ![img.png](sphere-grab.png)
 
-**Important:* make sure proportional is off or you'll just end up dragging the whole sphere (because the proportional area of influence extends over the whole tiny sphere).
+**Important:** make sure proportional is off or you'll just end up dragging the whole sphere (because the proportional area of influence extends over the whole tiny sphere).
 
-So simple `g` isn't quite what we want, cancel and use `e` (for extrude) instead:
+So, simple `g` isn't quite what we want, cancel and use `e` (for extrude) instead:
 
 ![img.png](sphere-extruded.png)
 
@@ -58,9 +58,9 @@ Note: oddly, if you haven't got the sprinkle currently selected, you can right-c
 
 ### Particle instances
 
-Particle instances is where you reference one object and duplicate it over the surface of another object.
+_Particle instances_ is where you reference one object and duplicate it over the surface of another object.
 
-Select the icing, go to _Particle Properties_ and for whatever reason there's no _New_, instead click the plus icon and then press _Play Animation_ (as for the monkey head fire animation) and you get a very strange particle effect. So switch from the default _Emitter_ particle type (animated) to _Hair_ type (static) for an initially even weirder static effect:
+Select the icing, go to _Particle Properties_ and, for whatever reason, there's no _New_ so instead, click the plus icon and then press _Play Animation_ (as for the monkey head fire animation) and you get a very strange particle effect. So switch from the default _Emitter_ particle type (animated) to _Hair_ type (static) for an initially even weirder static effect:
 
 ![img.png](emitter.png)
 
@@ -72,7 +72,7 @@ Then adjust the _Scale_ value (under where you just set _Render As_) to e.g. 1.6
 
 Andrew notes that you'd use particles like this to scatter rocks over a scene but there you'd crank up _Scale Randomness_ to create far more variation in rock sizes.
 
-As you can see the sprinkles are all facing the same direction, so tick _Advanced_ and tick, expand the _Rotation_ section and change _Orientation Axis_ from _Velocity / Hair_ to _Normal_. Now, try adjusting _Randomize - interesting but this clearly isn't what we want - then trying adjusting _Randomize Phase_.
+As you can see the sprinkles are all facing the same direction, so tick _Advanced_ and expand the _Rotation_ section and change _Orientation Axis_ from _Velocity / Hair_ to _Normal_. Now, try adjusting _Randomize_ - interesting but this clearly isn't what we want - then trying adjusting _Randomize Phase_.
 
 Set _Randomize Phase_ to maximum and then set _Randomize_ to a tiny value, e.g. 0.15, as you don't want all the sprinkles lying perfectly on the surface, you want some to turn a little randomly relative to the surface as they would when sinking into the icing.
 
@@ -96,13 +96,13 @@ Redrawing the particles while painting can be quite compute intensive and slow t
 
 ![img.png](disable-realtime-particles.png)
 
-As with sculpting, you can adjust the brush radius with `f` - Andrew uses a radius of about 270px. Draw a big fat circle on the top of the icing, then adjust the radius down, e.g. to 150px, and flip the _Weight_ value between 1 (to draw in red) and 0 to draw in blue to get exactly the coverage you want:
+As with sculpting, you can adjust the brush radius with `f` - Andrew uses a radius of about 270px. Draw a big fat circle on the top of the icing, then adjust the radius down, e.g. to 150px, and flip the _Weight_ value between 1 (to draw in red) and 0 (to draw in blue) to get exactly the coverage you want:
 
 ![img.png](weight-paint-complete.png)
 
 Re-enable the sprinkles (monitor icon) and switch back to _Object Mode_ - interestingly, `tab` would switch to _Edit Mode_ but then `tab` again would switch back to _Weight Mode_, i.e. `tab` toggles between _Edit Mode_ and the previously selected mode. So use `ctrl-tab` instead.
 
-Nothing has changed, to get the particles to use the weight painting, go to _Particle Properties, then go right down and expand _Vertex Groups_ and set _Density_ to _Group_:
+Nothing has changed, to get the particles to use the weight painting, go to _Particle Properties_, then go right down and expand _Vertex Groups_ and set _Density_ to _Group_:
 
 ![img.png](vertex-groups.png)
 
@@ -114,7 +114,7 @@ Note: you can just go back to _Weight Paint_ mode and work with the weight paint
 
 If you feel you got too many sprinkles, go back to _Particle Properties_ and in the _Emission_ section, adjust the _Number_ value down to e.g. 700.
 
-Update: you can see he settles on 800 much later on.
+**Update:** you can see he settles on 800 much later on.
 
 If you do a render now, things will look very strange until you un-exclude the collections for camera, light and environment (and make sure you've got the camera looking at what you want).
 
@@ -139,13 +139,13 @@ Now switch to _Solid_ viewport shading (`z` and `6`) and click the _Shading_ but
 
 In particular, the background is quite odd - you see a very blurry version of the outdoor scene that you can see in the mirrored sphere. And the donut is almost invisible - but you can see the 3D cursor that marks its center. Just zoom-in on the donut to bring it into view.
 
-**Important:** we're now in the _Shading_ workspace but we've already been working with _Viewport Shading_, which is something different, i.e. the _Solid_, _Rendered_ etc. discs that you see in the upper-right of the viewport. Look at which of the _Viewport Shading_ discs is currently selected - it's _Material Preview_ - when we switched to the _Shading_ workspace, it automatically switched from _Rendered_ to this. To the right of the _Viewport Shading_ discs is a drop-down arrow - it reveals options specific to the currently selected _Viewport Shading_ mode. Try it and you'll see these options for _Material Preview_:
+**Important:** we're now in the _Shading_ workspace but we've already been working with viewport shading, which is something different, i.e. the _Solid_, _Rendered_ etc. discs that you see in the upper-right of the viewport. Look at which of the viewport shading discs is currently selected - it's _Material Preview_ - when we switched to the _Shading_ workspace, it automatically switched from _Rendered_ to this. To the right of the viewport shading discs is a drop-down arrow - it reveals options specific to the currently selected viewport shading mode. Try it and you'll see these options for _Material Preview_:
 
 ![img.png](material-preview-options.png)
 
 The [documentation](https://docs.blender.org/manual/en/latest/editors/3dview/display/shading.html) is a little confusing - the mirrored sphere is what's referred to in the documentation as the _HDRI Environment_, i.e. the "environment map used to light the scene". It, _Rotation_, _Strength_, _World Opacity_ and _Blur_ only come into play if _Scene World_ is unticked (as it is by default in Blender 2.92). Try clicking on the sphere and choosing a different environment map and try reducing _Blur_ to zero to the environment far more clearly.
 
-In the video it _looks_ as if there's no environment showing. You can get a similar look to this by ticking both _Scene Lights_ and _Scene World_ but then the mirrored sphere disappears from the viewport. Alternatively, you can set _World Opacity_ to 0 to get something that looks similar to Andrew's setup. However, it may simply be that he's zoomed in such that we no longer see much structure in the environment map. I left all viewport shading options unchanged.
+In the video it _looks_ as if there's no environment showing. You can get a similar look to this by ticking both _Scene Lights_ and _Scene World_ but then the mirrored sphere disappears from the viewport. Alternatively, you can set _World Opacity_ to 0 to get something that looks similar to Andrew's setup. However, it may simply be that he's zoomed in such that we no longer see much structure in the background environment map. I left all viewport shading options as they were, i.e. unchanged.
 
 Note: what Andrew refers to as "LookDev mode" has been renamed to _Material Preview_ (see [here](https://developer.blender.org/T68312) - there, they also note that the intention was to remove _Scene Lights_ and _Scene World_ but other people argued to keep them).
 
@@ -157,22 +157,22 @@ The node view is another view on these same properties where you can use and man
 
 Aside: what does _BSDF_ stand for? See [here](https://en.wikipedia.org/wiki/Bidirectional_scattering_distribution_function) on Wikipedia and [here](https://blender.stackexchange.com/a/786) on the Blender StackExchange for an answer.
 
-We want to add a node that will set the _Base Color_ of the _Principled BSDF_ node. Press `shitf-A`, go to _Input_ and select _Object Info_. Then drag its _Random_ output to the _Base Color_ input and you end up with sprinkles where the colors vary through the greyscale from white to black:
+We want to add a node that will set the _Base Color_ of the _Principled BSDF_ node. Press `shift-A`, go to _Input_ and select _Object Info_. Then drag its _Random_ output to the _Base Color_ input and you end up with sprinkles where the colors vary through the greyscale from white to black:
 
 ![img.png](random-color.png)
 
-Everytime the sprinkle object is replicated, duplicated or referenced, _Random_ is used to provide a new value for _Base Color_. It's just producing a value from 0 to 1 on a gradient that currently goes from black, i.e. 0, to white, i.e. 1. To get a more interesting gradient, press `shitf-A`, go to _Converter_ and select _ColorRamp_. Drag the resulting node on top of the line between _Random_ and _Base Color_ and _Random_ will be automatically rewired to the _Fac_ input on the new node and its _Color_ output will be wired through to _Base Color_:
+Everytime the sprinkle object is replicated, duplicated or referenced, _Random_ is used to provide a new value for _Base Color_. It's just producing a value from 0 to 1 on a gradient that currently goes from black, i.e. 0, to white, i.e. 1. To get a more interesting gradient, press `shift-A`, go to _Converter_ and select _ColorRamp_. Drag the resulting node on top of the line between _Random_ and _Base Color_ and _Random_ will be automatically rewired to the _Fac_ input on the new node and its _Color_ output will be wired through to _Base Color_:
 
 ![img.png](colorramp.png)
 
-Click the black area in the _ColorRamp_ node, change it to e.g. bright red and see what happens (drag the _V_ value up to 1.0 first or everything stays black).
+Click the black area in the _ColorRamp_ node, change it to e.g. bright red and see what happens (drag the _V_ color value up to 1.0 first or everything stays black).
 
-Now, to add more colors into the color ramp - just click the plus button three times to introduce three new color stops and then click the drop-down arrow to the right of the minus button and select _Distribute Stops Evenly_. Click each of the stops in turn, to select it, and then click on the color area below to change its color. Andrew used the following colors for the first four stops and left the right-most one as white:
+Now, to add more colors into the color ramp - just click the plus button three times to introduce three new color stops and then click the drop-down arrow to the right of the minus button and select _Distribute Stops Evenly_. Click each of the stops in turn, to select it, and then click the little block, that makes up its body, and change its color. Andrew used the following colors for the first four stops and left the right-most one as white:
 
 * Blue - HSV 0.6, 0.45 and 1.
 * Purple - HSV 0.76, 0.4 and 1.
 * Hot pink - HSV 0.85, 0.54 and 1.
-* Yellow - 0.16, 0.4 and 1
+* Yellow - HSV 0.16, 0.4 and 1
 
 Selecting the stops is a little odd - they didn't always select when I clicked them - when you've selected one successfully, you'll see a dotted line appear above it.
 
@@ -188,9 +188,9 @@ As a last step adjust the _Roughness_ value (either in the _Principled BSDF_ nod
 
 ![img.png](chalky-sprinkles.png)
 
-#### Varying sprinkle size
+### Varying sprinkle size
 
-Switch back to _Layout_ workspace and _Solid_ viewport shading mode and select the icing. If you go to _Particle Properties_ and then, in the _Render_ section, adjust the _Scale Randomness_ value (currently 0.1) up and down then we vary both their length and width, which isn't what we want, so leave it as it is.
+Switch back to _Layout_ workspace and _Solid_ viewport shading and select the icing. If you go to _Particle Properties_ and then, in the _Render_ section, adjust the _Scale Randomness_ value (currently 0.1) up and down then we vary both their length and width, which isn't what we want, so leave it as it is.
 
 So find the original sprinkle, select it, right click it and select _Duplicate Objects_ (or just press `shift-D`) and drag it to the right (click and release MMB to make this easier, assuming you used NumPad `.` and `1` to get the sprinkle nicely focused in a front on view).
 
@@ -200,17 +200,17 @@ With the duplicate selected, `tab` into _Edit Mode_, toggle on x-ray mode (`alt-
 
 `tab` out of edit mode and select each of the sprinkles in turn and, with `F2`, give them the names "Sprinkle_short" and "Sprinkle_long". Then select both, press `m` and move them to a _New Collection_ called "Sprinkles".
 
-Aside: I kept mistakenly pressing `shitf-M` (rather than just `m`) and getting confused as to why I had a collection containing the sprinkles but they could still also be seen outside the collection in the _Outliner_. `shift-M` links the objects into a collection rather than moving them.
+Aside: I kept mistakenly pressing `shift-M` (rather than just `m`) and getting confused as to why I had a collection containing the sprinkles but they could still also be seen outside the collection in the _Outliner_. `shift-M` links the objects into a collection rather than moving them.
 
 Then select the icing, go to _Particle Properties_ and, in the _Render_ section, change the _Render As_ value from _Object_ to _Collection_. Then in the _Collection_ section that's now appeared below, click on the _Instance Collection_ field and choose "Sprinkles".
 
 ![img.png](render-as-collection.png)
 
-Switch to _Material Preview_ viewport shading mode (`z` and `2`) for a less-processing expensive view of the result than the _Render_ mode:
+Switch to _Material Preview_ viewport shading (`z` and `2`) for a less-processing expensive view of the result than the _Render_ mode:
 
 ![img.png](long-and-short-sprinkles.png)
 
-#### More variety
+### More variety
 
 Select the original sprinkle and create a medium length one (in just the same way as the long one).
 
@@ -218,7 +218,7 @@ Select the long sprinkle, duplicate it, `tab` to _Edit Mode_ and select _Loop Cu
 
 ![img.png](loop-cut.png)
 
-Move the mouse around the select object and you can see the loop-cut outline move around showing different possible cuts. Move the mouse such that you get a loop around the middle of the sprinkle, then click, then move the mouse again to select where along the length of the sprinkle you want the cut - and now you've got a new set of vertices that allow you to add more detail to the object.
+Move the mouse around the selected object and you can see the loop-cut outline move around showing different possible cuts. Move the mouse such that you get a loop around the middle of the sprinkle, then click, then move the mouse again to select where along the length of the sprinkle you want the cut - and now you've got a new set of vertices that allow you to add more detail to the object.
 
 Alternatively, and what we'll do here, press `ctrl-R`, then move the mouse until the loop is around the middle again but now turn the scroll wheel to get additional loops - we just want two - then click and then right-click (the right-click just avoids the phase where you can place the cuts and just places them in their default positions).
 
@@ -226,7 +226,7 @@ Then with the middle section selected, press `g` and `x` and deform the sprinkle
 
 ![img.png](deformed-sprinkle.png)
 
-Then select the ends and use `r` to rotate them nicely relative to the now bend body:
+Then select the ends and use `r` to rotate them nicely relative to the now bent body:
 
 ![img.png](deformed-sprikle-ends.png)
 
@@ -274,9 +274,9 @@ Aside: for a quick explanation of what a random seed is, see the [random seed](h
 
 ### Adding balls as an additional sprinkle type
 
-As noted before the 3D cursor determines where new objects are added, so press `shift-RMB` and move it out to the left of the sprinkles (you can return it, later, to its default location with `shift-C`).
+As noted before the 3D cursor determines where new objects are added, so press `shift-RMB` and move it out to the left of the sprinkles (you can return it, later, to its default location, with `shift-C`).
 
-Then `shift-A` and add a new _UV Sphere_ (under _Mesh_) - it'll start as absolutely massive relative to the existing sprinkles, so in the _Add UV Sphere_ dialog change _Segments_ to 16, _Rings_ to 8 and _Radius_ to 4mm.
+Then `shift-A` and add a new _UV Sphere_ (under _Mesh_) - it'll start as absolutely massive relative to the existing sprinkles, so in the _Add UV Sphere_ operator panel change _Segments_ to 16, _Rings_ to 8 and _Radius_ to 4mm.
 
 Select it, right-click and select _Shade Smooth_, then `g` and move it to where you want it relative to the other sprinkles.
 
@@ -304,7 +304,7 @@ It's probably a good time to clean up the sprinkle names if some of them still h
 
 You can now, as well as controlling the number of balls, give medium sprinkles more weight than long or show ones. So e.g. change the counts for short and long sprinkles to 30 and medium ones to 60 and leave the spheres at 1.
 
-Note: as seen in the video leaving the sphere's count at 1 gives slightly too few spheres while 2 gives slightly too many. I thought this could be fixed by increasing all the counts by a factor of 10 which would allow me to then set the sphere's count to 15, i.e. like setting it to 1.5 before applying the factor of 10. But this didn't work out at all as I expected - in fact things get very strange. I suspect this has something to do with the size of these counts relative to the total number of particles being used (e.g. 800), e.g. it starts with the first item on the list and scatters the given count of those objects on the icing, goes on to the second list item, does the same and so on until its reached the desired number of particles (looping through the list again if necessary). So if you set the counts very high, you end up actually only using the first one or two objects in the list. For a really weird outcome set the cylinder like sprinkles to values of 60 or 30 (as suggested above) and set the sphere count to 400:
+Note: as seen in the video leaving the sphere's count at 1 gives slightly too few spheres while 2 gives slightly too many. I thought this could be fixed by increasing all the counts by a factor of 10 which would allow me to then set the sphere's count to 15, i.e. like setting it to 1.5 before applying the factor of 10. But this didn't work out at all as I expected - in fact things get very strange. This is due to the size of these counts relative to the total number of particles being used (e.g. 800) - it starts with the first item on the list and scatters the given count of those objects on the icing, goes on to the second list item, does the same and so on until its reached the desired number of particles (looping through the list again if necessary). So if you set the counts very high, you end up actually only using the first one or two objects in the list. For a really weird outcome set the cylinder like sprinkles to values of 60 or 30 (as suggested above) and set the sphere count to 400:
 
 ![img.png](strange-counts.png)
 
@@ -353,7 +353,7 @@ If you didn't select the donut before switching to the _Texture Paint_ workspace
 
 ### UV mapping/unwrapping
 
-At this point, Andrew takes a few minutes to briefly discuss UV unwrapping. He says we don't actively have to do anything UV-mapping related at this stage, we just need to be somewhat aware of what's involved and the subject will be covered in more detail when we come to the coffee cup.
+At this point, Andrew takes a few minutes to briefly discuss UV unwrapping. He says we don't actively have to do anything UV-mapping related at this stage, we just need to be somewhat aware of what's involved and that the subject will be covered in more detail when we come to the coffee cup.
 
 It turns out that one may have to actively update the UV map related with the donut depending on how and by how much one distorted the original donut. This was the case for my donut - so, I had to take the time, at this point, to learn more about UV unwrapping. My notes are here in [`uv-unwrapping.md`](uv-unwrapping.md). Initially, things seemed much more complicated than they are - the basics of UV mapping are actually very simple and once you've learned them you can take a flat representation of an object and in a few minutes produce a cool looking 3D representation.
 
@@ -373,7 +373,7 @@ There's nothing magic about the chosen dimensions, it's just approximately the s
 
 If you want to see the pure black rectangle that Andrew sees, just toggle off _Show Overlays_ for this viewport.
 
-The donut is still purple, i.e. it's warning us that it's still got no texture assigned. Replacing the current flat _Base Color_ with the image we've just created actually involves creating a new node.
+The donut is still purple, i.e. it's warning us that it's still got no texture assigned. Assigning a texture involves adding another node to enable us to replace the current flat _Base Color_ with the image we've just created.
 
 So, make sure the donut is selected and switch to the _Shading_ workspace. In the _Shader Editor_ (where the nodes are), press `shift-A` and, under _Texture_, select _Image Texture_. In this new node, click the image dropdown (to the left of _New_), select "Donut_texture" and then link its _Color_ output to the input for _Base Color_:
 
@@ -381,9 +381,9 @@ So, make sure the donut is selected and switch to the _Shading_ workspace. In th
 
 Note: in the screenshot above you can see various different colored inputs and outputs but look at all the connections, e.g. _Color_ to _Base Color_ where both are yellow - it turns out the colors signal what can potentially be connected to what, i.e. you can only connect matching colors.
 
-Now, switch back to the _Texture Painting_ workspace and the donut should look very black. Now try painting on the donut and also on the image (you should already be in _Draw_ mode in both viewports). You'll notice that if you paint off the side of the image, it _doesn't_ wrap around and continue painting on the other side - however, if you paint on the donut it does wrap around at join points. This is important if you don't want strange effects at the seams, i.e. where the edges of the image are.
+Now, switch back to the _Texture Painting_ workspace and the donut should look very black. Try painting on the donut and also on the image (you should already be in _Draw_ mode in both viewports). You'll notice that if you paint off the side of the image, it _doesn't_ wrap around and continue painting on the other side - however, if you paint on the donut it does wrap around at join points. This is important if you don't want strange effects at the seams, i.e. where the edges of the image are.
 
-Andrew says you have to save the image separately. In Blender 2.9, it's true that when you save the `.blend` file, this doesn't also save the image. However, if you quit Blender without having saved the image, it will warn you. And you don't have to save the image as a separate file - by default Blender [packs](https://docs.blender.org/manual/en/latest/files/blend/packed_data.html) it into `.blend` file. So you don't have to use _Save As_, you can just use _Save_ and let Blender manage it within the `.blend` file.
+Andrew says you have to save the image separately. In Blender 2.9, it's true that when you save the `.blend` file, this doesn't also save the image. However, if you quit Blender without having saved the image, it will warn you. And you don't have to save the image as a separate file - by default Blender [packs](https://docs.blender.org/manual/en/latest/files/blend/packed_data.html) it into the `.blend` file. So you don't have to use _Save As_, you can just use _Save_ and let Blender manage it within the `.blend` file.
 
 Note: the shortcut for saving the `.blend` file is `ctrl-S` but the shortcut for saving resources like the texture image or the high-quality renders (created with `F12`) is `alt-S`.
 
@@ -403,9 +403,12 @@ If you don't see any issues then great - as Andrew says, you just need to be awa
 
 * Press `x` to toggle your brush color from white to black and paint your image black, i.e. get it back to its original state. Remember that you can change the brush size with `f`.
 * Switch to the _Layout_ workspace and, in _Object Mode_, select the donut.
-* Switch to the _UV Editing_ workspace and, if the donut's vertices aren't already all selected in the right-hand _3D Viewport_, press `a` to select them all.
+* Switch to the _UV Editing_ workspace and in the right-hand _3D Viewport_:
+  * `alt-LMB` an edge running around the torus "tube", press `ctrl-E` and select _Mark Seam_.
+  * Do the same for an edge running around the inside of the hole.
+* You should now have two seams (marked in red) on the torus, now press `a` to select all vertices.
 * Then in the left-hand _UV Editor_, go to the _UV_ menu (to the left of _View_, _Select_ etc.), select _Reset_.
-* Then from the same menu, under the _Unwrap_ submenu, select _Follow Active Quads_ (and just click _OK_ in the small _Follow Active Quads_ dialog).
+* Then from the same menu, under the _Unwrap_ submenu, select _Follow Active Quads_ (and just click _OK_ in the small _Follow Active Quads_ operator panel).
 * Make sure the whole map is selected by pressing `a`.
 * Then, again from the _UV_ menu, select _Pack Islands_ and then, under the main _Edit_ menu, select _Adjust Last Operation_ and untick _Rotate_.
 * Then, yet again from the _UV_ menu, select _Constrain to Image Bounds_ (so that it becomes ticked).
@@ -422,17 +425,20 @@ _1. Paint everything black again._
 _2. Select the donut in the Layout workspace._  
 ![img.png](cookbook-uv-fix-2.png)
 
-_3. Select all the vertices with `a` in the UV Editing workspace._  
+_3. In the UV Editing workspace, mark two seams on the torus._  
+![img.png](cookbook-uv-fix-2.1.png)
+
+_4. Select all the vertices with `a`._  
 ![img.png](cookbook-uv-fix-3.png)
 
-_4. Select Reset and then Follow Active Quads._  
+_5. Select Reset and then Follow Active Quads._  
 ![img.png](cookbook-uv-fix-4.png)
 
-_5. Select the whole map with `a`, then Pack Islands, then Adjust Last Operation and untick rotate._  
+_6. Select the whole map with `a`, then Pack Islands, then Adjust Last Operation and untick rotate._  
 ![img.png](cookbook-uv-fix-5.png)  
 <sup>If you look at the left and right edges of the selected map it looks like they extend beyond the underlying image - but this isn't the case, it's just an artifact of highlighting.</sup>
 
-_6. Constrain to Image Bounds, switch Pivot Point to 2D Cursor, press `s` and scale to fit._  
+_7. Constrain to Image Bounds, switch Pivot Point to 2D Cursor, press `s` and scale to fit._  
 ![img.png](cookbook-uv-fix-6.png)
 
 That's it - if you return to the _Texture Paint_ workspace and toggle the brush color back to white then all should be good if you try painting on the donut now:
@@ -451,11 +457,11 @@ Establish a base color for the image - press `n` to pop out the side menu, then 
 
 Note: I didn't have _Smooth Stroke_ (or _Stabilize Stroke_ as it seems to be called in Blender 2.92) turned on but my drawing was still extremely slow. Turning off _Anti-Aliasing_ does help a bit. It seems many people experience something similar - and other than reducing your brush size nothing definitely seems to help.
 
-Now we want to paint a white belt around the donut. Pop out the menu again with `n` and swap the colors (the little "cycle" icon to the right of the two colors or press `x`) to make black the primary color and then adjust it to be white (just set the V of HSV to 1). In the same menu, set _Radius_ to 90px and _Strength_ to 0.3.
+Now we want to paint a white belt around the donut. Pop out the menu again with `n` and swap the colors (with the little "cycle" icon to the right of the two colors or press `x`) to make black the primary color and then adjust it to be white (just set the V of HSV to 1). In the same menu, set _Radius_ to 90px and _Strength_ to 0.3.
 
 Note: from then on `x` is really useful for switching between the primary and secondary color (so you can fix up places where you went to far with one color or the other).
 
-Try drawing on the white belt directly - it's fairly clear it's painted on (with a stylus and brush pressure you could achieve a better result). We want to reduce the artificial appearances of the flat brush stroke.
+Try drawing on the white belt directly - it's fairly clear it's painted on, which isn't the effect we want (with a stylus and brush pressure you could achieve a better result). We want to reduce the artificial appearances of the flat brush stroke.
 
 First, in the _Image Editor_ viewport, pop out the side menu again and expand the _Texture Mask_ area (**not** the _Texture_ area above it). Click the checkerboard pattern, select _New_ and you end up with a black texture with a name like "Texture.001":
 
@@ -479,13 +485,13 @@ Don't forget about the inside of the donut hole - paint a belt around it too. It
 
 ![img.png](completed-belt.png) 
 
-Note: if you pop out the side menu with `n`, go to the _View_ tab and change the _Clip Start_ value to ~10cm then painting the inside of the hole is much easier.
+Note: if you pop out the side menu with `n`, go to the _View_ tab and change the _Clip Start_ value to ~10cm then painting the inside of the hole is much easier (as the front part of the donut, that hides the hole, is clipped away).
 
-I found I got the best painting result with click, then a stroke forward and back and then release and rotate. And then a little correcting at the edges by toggle the color with `x` and reducing the brush size.
+I found I got the best painting result with click, then a stroke forward and back and then release, rotate the donut and repeat. And then a little correcting at the edges by toggle the color with `x` and reducing the brush size.
 
 ### Darkening the donut
 
-We've used the brush and texture to introduce a lighter colored belt around the donut. Now to use the texture darken up and get rid of the flatness of the color of the rest of the donut.
+We've used the brush and texture to introduce a lighter colored belt around the donut. Now to use the texture to darken up and get rid of the flatness of the color of the rest of the donut.
 
 To do this, increase the brush size a little, make sure white is the primary color and change it to black (V value of 0). If you paint on the donut now - you'll paint a cloudy black color which isn't what we want. Instead, change the brush _Blend_ type from _Mix_ to _Overlay_ - this, instead of painting over the existing color, will reduce its brightness, i.e. make it darker (essentially adjust the V value of the existing color).
 
@@ -528,15 +534,15 @@ Note: the order of the _Fac_ and _Color_ outputs seems to have changed between B
 
 ![img.png](fac-output.png)
 
-We want to use the black and white cloud texture output by _Fac_ to drive the bumpiness and color of our material.
+We want to use the black and white cloud-like texture output by _Fac_ to drive the bumpiness and color of our material.
 
 Now, try adjusting the _Scale_ value up and down. At about 25 the donut looks like this:
 
 ![img.png](scale-25-before.png)
 
-Due to the way that the node output is mapped (which is related to UV mapping or anything) things are stretched top-to-bottom relative to left-to-right so there's less detail top-to-bottom (to be honest I find it hard to see exactly what's being talked about here - if I'd had to guess I would have said things are _perhaps_ somewhat stretched left-to-right).
+Due to the way that the node output is mapped (which is not related to UV mapping or anything else) things are stretched top-to-bottom relative to left-to-right so there's less detail top-to-bottom (to be honest I find it hard to see exactly what's being talked about here - if I'd had to guess I would have said things are _perhaps_ somewhat stretched left-to-right).
 
-Anyway, the best way to fix that is to press `shitf-A` and, under _Input_, select _Texture Coordinate_. Then wire its _Object_ output to the _Vector_ input of the _Noise Texture_ node and up the scale to about 320.
+Anyway, the best way to fix that is to press `shift-A` and, under _Input_, select _Texture Coordinate_. Then wire its _Object_ output to the _Vector_ input of the _Noise Texture_ node and up the scale to about 320.
 
 Andrew says this causes the _Noise Texture_ to "use the object data, which is most appropriate for procedural textures". Quite what this means, I'm unsure.
 
@@ -544,7 +550,7 @@ Andrew says this causes the _Noise Texture_ to "use the object data, which is mo
 
 We're going to use this effect as the bump of our material, i.e. actually change the shape of our mesh (Andrew says there's also another form of bump that he calls "fake bump" but doesn't say anything more about it).
 
-We want the noise texture to generate a displacement (white means more and black less), so press `shift-A` and, under _Vector_, select _Displacement_. Now, connect the _Fac_ output of the _Noise Texture_ to the _Height_ input of the _Displacement_ node and connect its _Displacement_ output to the _Displacement_ input of the _Material Output_. And finally, `ctrl-shift-LMB` the _Principled BSDF_ node to make it, once again, the node that's wired through to the _Surface_ input of the _Material Output_ node.
+We want the noise texture to generate a displacement (brighter means more and darker less), so press `shift-A` and, under _Vector_, select _Displacement_. Now, connect the _Fac_ output of the _Noise Texture_ to the _Height_ input of the _Displacement_ node and connect its _Displacement_ output to the _Displacement_ input of the _Material Output_. And finally, `ctrl-shift-LMB` the _Principled BSDF_ node to make it, once again, the node that's wired through to the _Surface_ input of the _Material Output_ node.
 
 ![img.png](bump-node-setup.png)
 
@@ -581,21 +587,21 @@ Level 2, part 5 - final donut
 
 We have very fine-grained bumps - we want a mix of these bumps and much larger bumps.
 
-Note: I rearranged the existing nodes at the start of this lesson so that I could add in the nodes introduced below without continuously rearranging things.
+Note: I rearranged the existing nodes at the start of this lesson so that I could add in the nodes introduced below without continuously rearranging the layout.
 
 Select the _Noise Texture_ node and press `ctrl-D` to duplicate it, drag the duplicate below the existing one, connect its _Vector_ input to the _Object_ output of the _Texture Coordinate_ node (just like with the existing one) then `ctrl-shift-LMB` (as we did before) so we can see the effect of this node. Then adjust its _Scale_ value from 1500 to 200:
 
 ![img.png](large-scale-displacement.png)
 
-As the order of _Fac_ and _Color_ have changed, in Blender 2.9, we see the black and white output rather than color output that Andrew sees by default in 2.8.
+Aside: as the order of _Fac_ and _Color_ have changed, in Blender 2.9, we see the black and white output rather than color output that Andrew sees by default in 2.8.
 
 This second _Noise Texture_ node is our large scale bumps. We want to combine the _Fac_ outputs of the two _Noise Texture_ nodes into the _Height_ input of the _Displacement_ node. If you try directly, you'll see the _Height_ input can only accept one connection at a time.
 
 So press `shift-A` and, under _Color_, select _MixRGB_, `ctrl-shift-LMB` it, and connect the _Fac_ outputs to _Color 1_ and _Color 2_ of the _MixRGB_ node - you now see a mix of small and large bumps.
 
-Try adjusting the _Fac_ value of the _MixRGB_ node - 0 results in only _Color 1_, i.e. small bumps, and 1 results in only _Color 2_, i.e. large bumps. Factor isn't controlling the mixing - it's actually controlling how much effect the _MixRGB_ node has - when _Fac_ is 0, the _MixRGB_ node has no effect and it's as if the input to _Color 1_ was wired straight to whatever the _Color_ output connects to.
+Try adjusting the _Fac_ value of the _MixRGB_ node - 0 results in only _Color 1_, i.e. small bumps, and 1 results in only _Color 2_, i.e. large bumps. _Fac_ (factor) isn't controlling the mixing - it's actually controlling how much effect the _MixRGB_ node has - when _Fac_ is 0, the _MixRGB_ node has no effect and it's as if the input to _Color 1_ was wired straight to whatever the _Color_ output connects to.
 
-It took some effort to work out what the Blender blend modes do - you can find my notes in [`blend-modes.md`](blend-modes.md). It turns out that _Mix_ mode (called _Normal_ in Photoshop, Gimp etc.) just shows the foreground image (i.e. _Color 2_) if all its pixels have alpha at 100% (i.e. no transparency), which _I believe_ is the case for the images generated by the _Noise Texture_ nodes. So it's actually just _Fac_, set to its default of 0.5, that resulting in the current mixing.
+It took some effort to work out what the Blender blend modes do - you can find my notes in [`blend-modes.md`](blend-modes.md). It turns out that _Mix_ mode (called _Normal_ in Photoshop, Gimp etc.) just shows the foreground image (i.e. _Color 2_) if all its pixels have alpha at 100% (i.e. no transparency), which _I believe_ is the case for the images generated by the _Noise Texture_ nodes. So it's actually just _Fac_, set to its default of 0.5, that is resulting in the current mixing.
 
 What we'd really like is for the brightness of the two inputs to be summed such that the small bumps essentially stick out further on the surface of the large bumps. To do this switch the blend mode from _Mix_ to _Add_. Initially, it looks as if you've now only really got the _Color 1_ detail, i.e. the small bumps, but in this mode we want the _MixRGB_ node (now titled _Add_) to 100% control the effect, so adjust the _Fac_ value up to 100% and you get what Andrew describes as "the small detail with the large detail punching through it".
 
@@ -615,13 +621,13 @@ So the donut is looking more interesting but still quite fake - there's more det
 
 ### Making the large bumps more distinct
 
-`ctrl-shift-LMB` the _Noise Texture_ node for the large bumps and take a look at the donut. Really, we want clearer large bumps and, at the moment, there's too much variation in large bump _Noise Texture_. So we want to get to a situation where more of the large bump texture is flat, i.e. black. We'll do this by using a _ColorRamp_ node to force all the values between black and medium to be black, i.e. flat, leaving just the medium to white values which will then be stretched to run from black (old medium) to white.
+`ctrl-shift-LMB` the _Noise Texture_ node for the large bumps and take a look at the donut. Really, we want clearer large distinct bumps and, at the moment, there's too much variation in the large bump _Noise Texture_. So we want to get to a situation where more of the large bump texture is flat, i.e. black. We'll do this by using a _ColorRamp_ node to force all the values between black and medium to be black, i.e. flat, leaving just the medium to white values which will then be stretched to run from black (old medium) to white.
 
 Press `shift-A` and, under _Converter_, select _ColorRamp_, `ctrl-shift-LMB` it and move the _Fac_ output of the large bump _Noise Texture_ node from the _Color 2_ input of the _Add_ node to the _Fac_ input of the new _ColorRamp_ node. And change the _Pos_ value of the _ColorRamp_ node from 0 to 0.5 (or just drag the left stop to the middle of the grayscale range), so you end up with:
 
 ![img.png](large-bump-color-ramp-node.png)
 
-Compare the two image below - we can see that the lowest areas in the original image have expanded, i.e. the amount of black has increased dramatically, while the highest, i.e. brightest areas, have remained.
+Compare the two images below - we can see that the lowest areas in the original image have expanded, i.e. the amount of black has increased dramatically, while the highest, i.e. brightest areas, have remained.
 
 _Large bumps with no color ramp._  
 ![img_1.png](large-bumps-no-ramp.png)
@@ -629,7 +635,7 @@ _Large bumps with no color ramp._
 _Large bumps with color ramp._  
 ![img.png](large-bumps-with-ramp.png)
 
-Note: I temporarily disconnected the _Displacement_ node from the _Material Output_ node for the above images to remove it from the mix.
+Note: I temporarily disconnected the _Displacement_ node from the _Material Output_ node, for the above images, to remove it from the mix.
 
 To finish up this bit, `ctrl-shift-LMB` the _Add_ node and connect the _Color_ output of the _ColorRamp_ node to the _Color 2_ input of the _Add_ node.
 
@@ -655,17 +661,17 @@ At this Andrew adjusts the _Scale_ value of the little bumps _Noise Texture_ nod
 
 Now the bumps are good shape-wise but at the moment they're only influencing the bumpiness (unsurprisingly). The bumps push up the surface but don't affect its color - but on a donut the blisters are darker colored, they (apparently) get cooked more and so end up slightly burnt. So we'd like the bumps to affect the color as well. Andrew says this is pretty typical for bumps in the real world - whatever process affected the bumpiness probably also affected the color.
 
-Try connecting the _Color_ output of _Add_ node to the _Base Color_ of the _Principled BSDF_ node - the donut ends up looking pretty creepy and completely black and white. We want a combination of the output of the _Add_ node, in combination with the existing _Image Texture_ node (with the donut image that we painted).
+Try connecting the _Color_ output of _Add_ node to the _Base Color_ of the _Principled BSDF_ node - the donut ends up looking pretty creepy and completely black and white. We want the output of the _Add_ node, in combination with the existing _Image Texture_ node (with the donut image texture that we painted).
 
 So, again we're going to use a _MixRGB_ node - press `shift_A` and find it under _Color_. Connect its _Color_ output to _Base Color_ and connect its _Color 1_ input to the _Color_ output of the existing _Image Texture_ node.
 
-Now the interesting bit - we're not going to wire anything into the _Color 2_ input of the new _MixRGB_ node. Instead, set the _Color 2_ value to the desired burnt color, i.e. a slightly darker variant of our base donut color - e.g. HSV 0.07, 0.7 and 0.65. Then try dragging the _Fac_ value of the _MixRGB_ node between 0 and 1 - at 0 everything looks as before, at 1 the donut color has become much flat and in particular you can notice that the white belt around the donut disappears. Try using a darker color for _Color 2_ and you'll also notice how much darker the top of the donut gets when _Fac_ is at 1.
+Now the interesting bit - we're not going to wire anything into the _Color 2_ input of the new _MixRGB_ node. Instead, set the _Color 2_ value to the desired burnt color, i.e. a slightly darker variant of our base donut color - e.g. HSV 0.07, 0.7 and 0.65. Then try dragging the _Fac_ value of the _MixRGB_ node between 0 and 1 - at 0 everything looks as before, at 1 the donut color has become much flatter and in particular you can notice that the white belt around the donut disappears. Try using a darker color for _Color 2_ and you'll also notice how much darker the top of the donut gets when _Fac_ is at 1.
 
 Instead, of using a directly set _Fac_ value we want to use the bumpiness to determine how much the darker color, i.e. _Color 2_, shows through. So connect the _Color_ output of our existing _Add_ node to the _Fac_ value of the new _MixRGB_ node.
 
 Note: I kept connecting the _Add_ node to the _Color 2_ value of the _MixRGB_ node, so achieving exactly the effect we don't want.
 
-But again, the _Mix_ blend mode isn't really what we want. This time we're going to switch from _Mix_ to _Overlay_ which causes the underlying color, e.g. white in the belt, to have more effect on things. Switch back and forward between _Mix_ and _Overlay_ and look in particular at the belt - with _Mix_ too much of the burnt color comes into play and we see odd overly brown lumps in the white belt.
+But again, the _Mix_ blend mode isn't really what we want. This time we're going to switch from _Mix_ to _Overlay_ which causes the underlying color, e.g. white in the belt, to have more effect on things. Switch back and forward between _Mix_ and _Overlay_ and look in particular at the belt - with _Mix_, too much of the burnt color comes into play and we see odd overly brown lumps in the white belt.
 
 The final node layout looks like this:
 
@@ -693,7 +699,7 @@ As you can see, each effect is quite subtle but, comparing the first and last re
 
 Andrew now goes through various things you can try to improve the look of your donut or make it more dramatically your _own_ donut (as opposed to being a copy of his). Switch to the _Layout_ workspace with _Rendered_ viewport mode, and with the icing etc. included but with the environment excluded, try the following things.
 
-Size and count of the sprinkles - with the icing select, go to _Particle Properties_ and try messing with the _Scale_ and _Number_ values.
+Size and count of the sprinkles - with the icing selected, go to _Particle Properties_ and try messing with the _Scale_ and _Number_ values.
 
 ![img.png](fewer-but-larger-sprinkles.png)
 
@@ -711,7 +717,7 @@ Press `alt-shift-Z` to toggle on _Show Overlays_, select the icing again, press 
 
 Note: without _Show Overlays_ on, you won't see the weight paint and without x-ray mode off you won't see the sprinkles.
 
-The result is fair less regularly distributed sprinkles:
+The result is less regularly distributed sprinkles:
 
 ![img.png](irregular-sprinkle-distribution.png)
 
@@ -731,7 +737,7 @@ And changing the base and subsurface colors is an easy way to make it distinctiv
 
 ### Bonus fun feature
 
-Make the icing radioactive by selecting it, going to _Material Properties_ and change the _Emission_ value from black to something bright and saturated, i.e. adjust the brightness up to max (V of 1) and the saturation to high (e.g. S of 0.8) and whatever hue you like (e.g H of 0.34 for green). As well as look weird and radioactive, look at glow around the edge of the icing and how it affects the color of the dough there.
+Make the icing radioactive by selecting it, going to _Material Properties_ and changing the _Emission_ value from black to something bright and saturated, i.e. adjust the brightness up to max (V of 1) and the saturation to high (e.g. S of 0.8) and whatever hue you like (e.g H of 0.34 for green). As well as look weird and radioactive, look at the glow around the edge of the icing and how it affects the color of the dough there.
 
 ![radio active](render-radioactive.png)
 
