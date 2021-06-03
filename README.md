@@ -5,6 +5,8 @@ This is the notebook I wrote while following Blender Guru's [Blender Beginner Tu
 
 There are no affiliate links in this notebook and all credit goes to Andrew Price (aka Blender Guru). This notebook is not meant to be standalone - it's my notes to go with the videos.
 
+If you're interested in a quick visual summary of the process covered here see [`journey.md`](journey.md).
+
 To get the latest version of Blender go to the Blender [download page](https://www.blender.org/download/).
 
 I used Blender version 2.92 while the videos use Blender 2.8 (see [here](https://www.blender.org/download/releases/) for the release history) so things look a little different between the two.
@@ -13,7 +15,7 @@ Blender can be used with a trackpad and keyboard without number pad - but a numb
 
 ![xxx](keyboard-and-mouse.png)
 
-As an enthusiastic Mac user, this setup isn't very normal. And even on other platforms, I've used scroll wheel mice but rarely, if ever, used it as a clickable third button. Similarly, I've never used the NumPad even when available. As a software developer, I do use the function keys in my IDE but I can imagine many people have never touched them. However, in Blender, I've found myself continuously using the third mouse button, the NumPad and the function keys (or, to be more precise, just `F12` so far).
+As an enthusiastic Mac user, this setup isn't very normal for me. And even on other platforms, I've used scroll wheel mice but rarely, if ever, used it as a clickable third button. Similarly, I've never used the NumPad even when available. As a software developer, I do use the function keys in my IDE but I can imagine many people have never touched them. However, in Blender, I've found myself continuously using the third mouse button, the NumPad and the function keys (or, to be more precise, just `F12` so far).
 
 Learning the shortcut keys is also pretty essential or you end up spending all your time looking for things in menus.
 
@@ -424,7 +426,7 @@ If we move around, it becomes clear that we have a very strange shadow for a don
 
 ![img.png](default-shadow.png)
 
-How are we seeing what looks light through the donut hole _behind_ the donut? It turns out this is all down to the real-time renderer that's being used.
+How are we seeing what looks like light through the donut hole _behind_ the donut? It turns out this is all down to the real-time renderer that's being used.
 
 Note: Andrew sees no shadow at all at this stage.
 
