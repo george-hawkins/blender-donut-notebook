@@ -43,3 +43,10 @@ So, most importantly, don't confuse _Mix_ in Blender with the (rarely used) _Har
 As well as the (very incomplete) Gimp documentation, linked to above, there's lots of pages, on these modes, around the web. The two clearest ones, that I found, are this [one](https://www.slrlounge.com/workshop/the-ultimate-visual-guide-to-understanding-blend-modes/) from SLR Lounge (looking at these modes in Photoshop) and this [one](https://highrise.digital/blog/css-blend-modes/) from Highrise Digital (looking at these modes in CSS). However, those two links only cover greyscale and transparency - color introduces more complexity and its covered here (without looking at transparency at all) in this [page](https://photoshoptrainingchannel.com/blending-modes-explained/) from the Photoshop Training Channel.
 
 It's interesting to see that with Mix/Normal there's actually no blending occurring - the alpha values of the pixels in the upper image determine how much of the underlying image is seen, so if the alpha values are all 100% in the upper image, you only see it.
+
+YouTube
+-------
+
+There are no end of videos on YouTube about blend modes - e.g. this [one](https://www.youtube.com/watch?v=QfGKdsz1pVM) from someone who usually focuses on Blender (but in this video treats blending as a general topic) or this [crash course](https://www.youtube.com/watch?v=EroAHgpsP_I) for blend modes in Photoshop or this more detailed [one](https://www.youtube.com/watch?v=zGTbOfhyXnA) (that just covers four modes).
+
+Some just look at the mechanics of what each mode does without making it clear when and why you might use a particular mode. Some explain the maths of what's going on (which I find helpful). So just find whatever works for you.

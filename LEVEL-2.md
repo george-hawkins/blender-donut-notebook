@@ -28,7 +28,7 @@ Even if you select the donut parent in the _Scene Collection_, you still also ha
 
 First exclude all collections (Andrew says "hide" but he means exclude), i.e. untick the checkboxes for the "Camera and light", "Donut" and "Environment" collections.
 
-First, `shift-A` and under _Mesh_, add a _UV Sphere_ (what U and V mean is a little complicated, see the Wikipedia [_UV mapping_](UV mapping) page and for the difference, again quite complicated, between _UV Shere_ and _Icosphere_, see this StackExchange [question](https://blender.stackexchange.com/q/72)). Then before you click away, go to the _Add UV Sphere_ dialog (lower-right) and change the _Radius_ from 1m to 1mm and adjust down _Segments_ to 12 and _Rings_ to 6 (otherwise your render times will be terrible once you've got hundreds of sprinkles on your icing).
+First, `shift-A` and under _Mesh_, add a _UV Sphere_ (what U and V mean is a little complicated, see the Wikipedia [_UV mapping_](https://en.wikipedia.org/wiki/UV_mapping) page and for the difference, again quite complicated, between _UV Sphere_ and _Icosphere_, see this StackExchange [question](https://blender.stackexchange.com/q/72)). Then before you click away, go to the _Add UV Sphere_ dialog (lower-right) and change the _Radius_ from 1m to 1mm and adjust down _Segments_ to 12 and _Rings_ to 6 (otherwise your render times will be terrible once you've got hundreds of sprinkles on your icing).
 
 **Note:** clipping came up before very early on, here when I zoomed in on the sphere it disappeared as I got close. This can be resolved by pressing `n` to pop out the side menu, selecting the _View_ tab and changing the _Clip Start_ to 1mm. Make sure you're not in camera view as it has its own clipping settings and will still clip even if you adjust _Clip Start_.
 
@@ -52,7 +52,7 @@ Then with the top of the sphere still selected, press `s` and `z` and drag the m
 
 `tab` back to _Object Mode_, toggle off x-ray - `alt-Z`, right-click on the sprinkle and select _Shade Smooth_.
 
-Note: oddly, if you haven't got the sprinkle currently selected, you can right click on it and select _Shade Smooth_ but it does nothing.
+Note: oddly, if you haven't got the sprinkle currently selected, you can right-click on it and select _Shade Smooth_ but it does nothing.
 
 ![img.png](sprinkle-shade-smooth.png)
 
@@ -82,7 +82,7 @@ Aside: Andrew notes that it's a bit odd that the random settings are under _Adva
 
 ### Weight painting
 
-Hide the donut (but not the icing) by unselecting its eye icon and you'll see there are sprinkles on the underside of the icing (and also on the the sides and dribbles where real sprinkles wouldn't usually stick):
+Hide the donut (but not the icing) by unselecting its eye icon and you'll see there are sprinkles on the underside of the icing (and also on the sides and dribbles where real sprinkles wouldn't usually stick):
 
 ![img.png](sprinkles-on-under-surface.png)
 
@@ -149,7 +149,7 @@ In the video it _looks_ as if there's no environment showing. You can get a simi
 
 Note: what Andrew refers to as "LookDev mode" has been renamed to _Material Preview_ (see [here](https://developer.blender.org/T68312) - there, they also note that the intention was to remove _Scene Lights_ and _Scene World_ but other people argued to keep them).
 
-Select the original sprikle so that its nodes show up in the _Shader Editor_, notice how the contents of the _Principled BSDF_ node are identical to those in the _Shading_ section of the _Material Properties_:
+Select the original sprinkle so that its nodes show up in the _Shader Editor_, notice how the contents of the _Principled BSDF_ node are identical to those in the _Shading_ section of the _Material Properties_:
 
 ![img.png](bsdf-node.png)
 
@@ -161,7 +161,7 @@ We want to add a node that will set the _Base Color_ of the _Principled BSDF_ no
 
 ![img.png](random-color.png)
 
-Everytime the sprinkle object is replicated, duplicated or referenced, _Random_ is used to provide a new value for _Base Color_. It's just producing a value from 0 to 1 on a gradient that currently goes from black, i.e. 0, to white, i.e. 1. To get a more interesting gradient, press `shitf-A`, go to _Converter_ and select _ColorRamp_. Drag the resulting node on top of the line between _Random_ and _Base Color_ and _Random_ will be automatically rewired to the the _Fac_ input on the new node and its _Color_ output will be wired through to _Base Color_:
+Everytime the sprinkle object is replicated, duplicated or referenced, _Random_ is used to provide a new value for _Base Color_. It's just producing a value from 0 to 1 on a gradient that currently goes from black, i.e. 0, to white, i.e. 1. To get a more interesting gradient, press `shitf-A`, go to _Converter_ and select _ColorRamp_. Drag the resulting node on top of the line between _Random_ and _Base Color_ and _Random_ will be automatically rewired to the _Fac_ input on the new node and its _Color_ output will be wired through to _Base Color_:
 
 ![img.png](colorramp.png)
 
@@ -244,11 +244,11 @@ In the end you should have a collection like this (the left-most one being the c
 
 ![img.png](five-sprinkle-shapes.png)
 
-If you look at the donut now, things are looking good but we see the issue, commented on previously, that the center of gravity of each sprinkle seems to be one of the ends rather than the center - some of the sprinkles are sticking up out of the icing at a dramatic angle. This is due to the origin point - which you can see when you select an object:
+If you look at the donut now, things are looking good but we see the issue, commented on previously, that the center of gravity of each sprinkle seems to be one of the ends rather than the center - some sprinkles are sticking up out of the icing at a dramatic angle. This is due to the origin point - which you can see when you select an object:
 
 ![img.png](origin-points.png)
 
-It's the little orange dot at the base of eahc of the selected sprinkles above. This origin point is the point at which the sprinkle attaches itself to the surface of the icing.
+It's the little orange dot at the base of the selected sprinkles above. This origin point is the point at which the sprinkle attaches itself to the surface of the icing.
 
 So with all the sprinkles selected, right-click, go to _Set Origin_ and select _Origin to Geometry_ and this centers the origin points:
 
@@ -270,7 +270,7 @@ Andrew's suggestion, if you're particularly unhappy with some really odd clump o
 
 In particular, you may want to come back to _Seed_ when you're unhappy with something that shows up particularly clearly in a final high-quality render.
 
-Aside: for a quick explanation of what a random seed is see the [random seed](https://en.wikipedia.org/wiki/Random_seed) Wikipedia article or [here](https://stats.stackexchange.com/a/354379/322395) on the stats StackExchange.
+Aside: for a quick explanation of what a random seed is, see the [random seed](https://en.wikipedia.org/wiki/Random_seed) Wikipedia article or [here](https://stats.stackexchange.com/a/354379/322395) on the stats StackExchange.
 
 ### Adding balls as an additional sprinkle type
 
@@ -310,7 +310,7 @@ Note: as seen in the video leaving the sphere's count at 1 gives slightly too fe
 
 What's with the weird distribution of spheres that misses out a segment of the icing altogether?
 
-**Update:** I asked about this [here](https://blender.stackexchange.com/q/223318/124535) on the Blender StackExchange and it turns out that this is an unusual situation where Andrew has missed out something important - the _Pick Random_ option. It turns out that the algorithm, that chooses particle objects, goes through the list repeatedly, laying down objects _in clumps_ according to the count assigned to each object, until it hits the total number of required particles. Things only look random when the counts are small enough that the algorithm has to go through the list many time, laying down clumps of one object on top of another such that eventually everything looks reasonably mixed up. But try increasing the counts such that they become large relative to the total number of particles and you notice the issue. You need to tick _Pick Random_ to resolve this issue. Once you've done this you can do what I wanted, i.e. assign the cyclindrical sprinkles values of 300 or 600 (rather than 30 or 60) and then assign the balls a value between 10 and 20 (giving you more control than you have when forced to choose either 1 or 2). I'd prefer to be able to assign objects a probability of being chosen, rather than a count, and I've asked about that [here](https://blender.stackexchange.com/q/223389/124535).
+**Update:** I asked about this [here](https://blender.stackexchange.com/q/223318/124535) on the Blender StackExchange and it turns out that this is an unusual situation where Andrew has missed out something important - the _Pick Random_ option. It turns out that the algorithm, that chooses particle objects, goes through the list repeatedly, laying down objects _in clumps_ according to the count assigned to each object, until it hits the total number of required particles. Things only look random when the counts are small enough that the algorithm has to go through the list many times, laying down clumps of one object on top of another such that eventually everything looks reasonably mixed up. But try increasing the counts such that they become large relative to the total number of particles and you notice the issue. You need to tick _Pick Random_ to resolve this issue. Once you've done this you can do what I wanted, i.e. assign the cylindrical sprinkles values of 300 or 600 (rather than 30 or 60) and then assign the balls a value between 10 and 20 (giving you more control than you have when forced to choose either 1 or 2). I'd prefer to be able to assign objects a probability of being chosen, rather than a count, and I've asked about that [here](https://blender.stackexchange.com/q/223389/124535).
 
 So, in the end, I ticked _Pick Random_ and used the following counts:
 
@@ -449,7 +449,7 @@ Finally - painting the donut. Whether you had to update the donut's UV map or co
 
 Establish a base color for the image - press `n` to pop out the side menu, then in the _Tool_ tab set the color to a donut color, i.e. the same as your old donut _Base Color_, e.g. HSV 0.08, 0.44 and 0.9. Then hide the menu, adjust your brush size to maximum with `f` and paint over anything you've done so far.
 
-Note: I didn't have _Smooth Stroke_ (or _Stablize Stroke_ as it seems to be called in Blender 2.92) turned on but my drawing was still extremely slow. Turning off _Anti-Aliasing_ does help a bit. It seems many people experience something similar - and other than reducing your brush size nothing definitely seems to help.
+Note: I didn't have _Smooth Stroke_ (or _Stabilize Stroke_ as it seems to be called in Blender 2.92) turned on but my drawing was still extremely slow. Turning off _Anti-Aliasing_ does help a bit. It seems many people experience something similar - and other than reducing your brush size nothing definitely seems to help.
 
 Now we want to paint a white belt around the donut. Pop out the menu again with `n` and swap the colors (the little "cycle" icon to the right of the two colors or press `x`) to make black the primary color and then adjust it to be white (just set the V of HSV to 1). In the same menu, set _Radius_ to 90px and _Strength_ to 0.3.
 
@@ -560,13 +560,13 @@ So we want to actually displace the shape of our mesh - go to _Material Properti
 
 ![img.png](bad-bump-displadement-scale.png)
 
-This is due to the scaling applied by the _Displacement_ node, go to its _Scale_ field and adjust its value down from 1.0 to 0.003. Now, the donut looks recongnisable again and you can also see bumpiness around the edges:
+This is due to the scaling applied by the _Displacement_ node, go to its _Scale_ field and adjust its value down from 1.0 to 0.003. Now, the donut looks recognisable again and you can also see bumpiness around the edges:
 
 ![img.png](scaled-bump-displacement.png)
 
 This bumpiness around the edges is not visible with _Material Preview_ viewport shading - it's only visible with _Rendered_ viewport shading.
 
-Andrew notes that the bumpiness depends on the how fine your mesh is - if you haven't got enough vertices then you won't see the desired level of detail, it'll look kind of spiky. To fix this you would go to _Modifier Properties_ and add in a _Subdivision Surface_ modifier. 
+Andrew notes that the bumpiness depends on how fine your mesh is - if you haven't got enough vertices then you won't see the desired level of detail, it'll look kind of spiky. To fix this you would go to _Modifier Properties_ and add in a _Subdivision Surface_ modifier. 
 
 The high bumpiness was useful, so we could see what was going on. But for a more donut like fine texture, adjust the _Scale_ value, of the _Noise Texture_ node, up to 1500.
 
@@ -659,9 +659,9 @@ Try connecting the _Color_ output of _Add_ node to the _Base Color_ of the _Prin
 
 So, again we're going to use a _MixRGB_ node - press `shift_A` and find it under _Color_. Connect its _Color_ output to _Base Color_ and connect its _Color 1_ input to the _Color_ output of the existing _Image Texture_ node.
 
-Now the interesting bit - we're not going to wire anything into the _Color 2_ input of the new _MixRGB_ node. Instead set the _Color 2_ value to the desired burnt color, i.e. a slightly darker variant of our base donut color - e.g. HSV 0.07, 0.7 and 0.65. Then try dragging the _Fac_ value of the _MixRGB_ node between 0 and 1 - at 0 everything looks as before, at 1 the donut color has become much flat and in particular you can notice that the white belt around the donut disappears. Try using a darker color for _Color 2_ and you'll also notice how much darker the top of the donut gets when _Fac_ is at 1.
+Now the interesting bit - we're not going to wire anything into the _Color 2_ input of the new _MixRGB_ node. Instead, set the _Color 2_ value to the desired burnt color, i.e. a slightly darker variant of our base donut color - e.g. HSV 0.07, 0.7 and 0.65. Then try dragging the _Fac_ value of the _MixRGB_ node between 0 and 1 - at 0 everything looks as before, at 1 the donut color has become much flat and in particular you can notice that the white belt around the donut disappears. Try using a darker color for _Color 2_ and you'll also notice how much darker the top of the donut gets when _Fac_ is at 1.
 
-Instead, of using a direclty set _Fac_ value we want to use the bumpiness to determine how much the darker color, i.e. _Color 2_, shows through. So connect the _Color_ output of our existing _Add_ node to the _Fac_ value of the new _MixRGB_ node.
+Instead, of using a directly set _Fac_ value we want to use the bumpiness to determine how much the darker color, i.e. _Color 2_, shows through. So connect the _Color_ output of our existing _Add_ node to the _Fac_ value of the new _MixRGB_ node.
 
 Note: I kept connecting the _Add_ node to the _Color 2_ value of the _MixRGB_ node, so achieving exactly the effect we don't want.
 
@@ -719,7 +719,7 @@ Subsurface scattering and icing color - select the icing, go to the _Material Pr
 
 ![img.png](subsurface-and-color-changes.png)
 
-If you overdid the white belt around the donut and don't want to redo the painting a quick fix is to select the donut dough (not the icing) and go to the _Shading_ workspace and add in a _MixRGB_ node between the _Image Texture_ node and the _Overlay_ node and set its _Color 2_ value to the same color as the original base color of the donut (e.g. HSV 0.08, 0.44 and 0.9). Then drag the _Fac_ value up and down - the higher the value the less the white of the belt will show through and the more the color is dominated by the flat base color.
+If you overdid the white belt around the donut and don't want to redo the painting a quick fix is to select the donut dough (not the icing) and go to the _Shading_ workspace and add in a _MixRGB_ node between the _Image Texture_ node and the _Overlay_ node and set its _Color 2_ value to the same color as the original base color of the donut (e.g. HSV 0.08, 0.44 and 0.9). Then drag the _Fac_ value up and down - the higher the value the less the white of the belt will show through and the more the color is dominated by the flat base color. Unlike the previous _MixRGB_ nodes, the default _Mix_ blend mode is fine.
 
 ![img.png](white-belt-correction.png)
 

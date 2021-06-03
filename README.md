@@ -1,7 +1,9 @@
 Blender donut tutorial notebook
 ===============================
 
-This is the notebook I wrote while following Blender Guru's [Blender Beginner Tutorial Series](https://www.youtube.com/watch?v=TPrnSACiTJ4&list=PLjEaoINr3zgEq0u2MzVgAaHEBt--xLB6U). Along with lots of notes taken staight from the videos, it includes the various things that I got confused about and how I resoved those issues.
+This is the notebook I wrote while following Blender Guru's [Blender Beginner Tutorial Series](https://www.youtube.com/watch?v=TPrnSACiTJ4&list=PLjEaoINr3zgEq0u2MzVgAaHEBt--xLB6U). Along with lots of notes taken straight from the videos, it includes notes on the various things that I got confused about and how I resolved those issues.
+
+There are no affiliate links in this notebook and all credit goes to Andrew Price (aka Blender Guru). This notebook is not meant to standalone - it's my notes to go with the videos.
 
 To get the latest version of Blender go to the Blender [download page](https://www.blender.org/download/).
 
@@ -9,7 +11,7 @@ I used Blender version 2.92 while the videos use version one of the 2.8 series o
 
 Blender can be used with a trackpad and keyboard without number pad - but a number pad and a mouse with a scroll wheel (that can also be used as a third button) seem to be _near_ essential.
 
-![m705](m705-small.jpg) ![keyboard](keyboard.png)
+![xxx](keyboard-and-mouse.png)
 
 As an enthusiastic Mac user, this setup isn't very normal. And even on other platforms, I've used scroll wheel mice but rarely, if ever, used it as a clickable third button. Similarly, I've never used the NumPad even when available. As a software developer, I do use the function keys in my IDE but I can imagine many people have never touched them. However, in Blender, I've found myself continuously using the third mouse button, the NumPad and the function keys (or, to be more precise, just `F12` so far).
 
@@ -117,7 +119,7 @@ What we want is to move a vertex along with those around it - we can do this wit
 
 ![img.png](proportional.png)
 
-**Important:** the snap-to (magnet) and the proportional editing (dot within circle) items consist of two parts, the right of each consists of a drop-down menu and you can change what's selected, e.g. from _Smooth_ to _Sharp_ without actually turning on the item itself. So later in this tutorial, I only later discovered that I was changing the snap-to options without actually enabling snap-to itself!
+**Important:** the snap-to (magnet) and the proportional editing (dot within circle) items consist of two parts - the right of each consists of a drop-down menu and you can change what's selected, e.g. from _Smooth_ to _Sharp_ without actually turning on the item itself. So later in this tutorial, I only later discovered that I was changing the snap-to options without actually enabling snap-to itself!
 
 Make sure that the left-hand side of the item (in this case the dot within the circle) is clearly selected:
 
@@ -154,7 +156,7 @@ Use the NumPad keys `0` to `9` to get different perspectives, in particular:
 
 We want to select the top-third of the donut - if we just click and drag and outline, we'll just select the vertices that we can see.
 
-Note: I find pressing `1` and `.` on the NumPad great for getting the current object nicely recentered if I've been panning and orbiting around.
+Note: I find pressing `1` and `.` on the NumPad great for getting the current object nicely re-centered if I've been panning and orbiting around.
 
 So switch into X-Ray mode (the upper-right icon of a square offset from a dotted square):
 
@@ -186,11 +188,11 @@ If you `tab` back into _Object Mode_, it's interesting to see how the bottom edg
 
 At around 9:36 in the video, he starts talking about setting the _Clip Start_ value if Blender clips your donut strangely when you zoom in and out. You do this by pressing `n` to pop out the side menu, going to _View_ and adjusting the _Clip Start_ value down to 0.01m. However, in my version of Blender it'd already defaulted to this value and I didn't need to adjust it.
 
-Aside: you can pop the side menu back in with `n` again - it took me a while to work out how you can do this, if you want, with the mouse. If you go to the left edge of the menu, you'll see a horizontal resize cursor - if you click now, you can drag the menu until it's hidden. There are various other menus that also work like this - there's a tiny arrow to show their presense when hidden which can be clicked to expand them but no obvious corresponding element to hide them again.
+Aside: you can pop the side menu back in with `n` again - it took me a while to work out how you can do this, if you want, with the mouse. If you go to the left edge of the menu, you'll see a horizontal resize cursor - if you click now, you can drag the menu until it's hidden. There are various other menus that also work like this - there's a tiny arrow to show their presence when hidden which can be clicked to expand them but no obvious corresponding element to hide them again.
 
 ![img.png](clip-start.png)
 
-At the moment, the icing is an infinitely thin layer on top of the donut - to give it some thickness select the icing, then go to the _Modifier Properties_ (spanner icon) and select _Solidify_.
+At the moment, the icing is an infinitely thin layer on top of the donut - to give it some thickness, select the icing, then go to the _Modifier Properties_ (spanner icon) and select _Solidify_.
 
 It's worth orbiting around the object and looking at the selected outline to try and work out what has happened, use `ctrl-Z` and `ctrl-shift-Z` to undo and redo so you can see the outline before and after adding the solidify modifier. You'll see you now have effectively an inner and outer icing layer that are joined together to create an object with _thickness_.
 
@@ -227,7 +229,7 @@ To see the full mesh for the icing we want to disable the solidify modifier _whi
 
 ![img.png](icing-mesh.png)
 
-The donut is fine but we want to increase the number of faces for the icing so that we can do more fine grained work when producing icing dribbles. So, click a vertex of the icing, press `a` to select-all, right-click and select _Subdivide_. To the lower-left, you'll see a _Subdivide_ item, leave _Number of Cuts_ as it is but increase _Smoothness_ from 0 to 1.
+The donut is fine but we want to increase the number of faces for the icing so that we can do more fine-grained work when producing icing dribbles. So, click a vertex of the icing, press `a` to select-all, right-click and select _Subdivide_. To the lower-left, you'll see a _Subdivide_ item, leave _Number of Cuts_ as it is but increase _Smoothness_ from 0 to 1.
 
 ![img.png](subdivide.png)
 
@@ -312,7 +314,7 @@ According to the [manual](https://docs.blender.org/manual/en/latest/modeling/mod
 
 > Makes the modifier “real”: converts the object’s geometry to match the applied modifier’s results, and deletes the modifier.
 
-What this seems to mean is that the geometry that is generated will be accessible in _Edit Mode_. If we look back at increasing _Levels Viewport_ for the dribbles, this increased the smoothness in _Object Mode_ but had no affect on the number of vertices in _Edit Mode_. Now if we `tab` to _Edit Mode_ we see that the number of vertices has doubled.
+What this seems to mean is that the geometry that is generated will be accessible in _Edit Mode_. If we look back at increasing _Levels Viewport_ for the dribbles, this increased the smoothness in _Object Mode_ but had no effect on the number of vertices in _Edit Mode_. Now if we `tab` to _Edit Mode_ we see that the number of vertices has doubled.
 
 TODO: how was this better that right-clicking on the object and selecting _Subdivide_ like we did previously for the icing?
 
@@ -347,7 +349,7 @@ Now onto the icing. Select the icing and hit _Apply_ for the _Solidify_ modifier
 
 **Important:** unhide the rest of the icing mesh with `alt-H` before proceeding.
 
-Select the whole mesh with `a` (not really necessary but looks nice), now in the _Subdivision_ modifier, increase the _Levels Viewport_ from 2 to 3 - we want super fine detail for the icing, click _Apply_ (again you have to `tab` to _Object Mode_ to be apply to click _Apply_ and then `tab` back to see the result).
+Select the whole mesh with `a` (not really necessary but looks nice), now in the _Subdivision_ modifier, increase the _Levels Viewport_ from 2 to 3 - we want super fine detail for the icing, click _Apply_ (again you have to `tab` to _Object Mode_ to be able to click _Apply_ and then `tab` back to see the result).
 
 ![img.png](icing-fine-mesh.png)
 
@@ -551,7 +553,7 @@ Note: the values above, e.g. for _Subsurface_ are the final values Andrew chose 
 
 ### Renders
 
-Here are some renders that show how the addition of each of the above settings affects thigs.
+Here are some renders that show how the addition of each of the above settings affects things.
 
 _Icing without material._  
 ![render](render-icing-0.png)
@@ -614,7 +616,7 @@ E.g. go to the upper-left corner as shown, click and drag right. I found it easy
 
 If you just right-click between two views then you get a menu that also allows you to join views.
 
-Currently, the small light source produces a hard sunlight-like effect. So with the view split we want to increase its size to get a softer effect. Expand the light source size way up and you'll see the shadown of the donut getting much softer.
+Currently, the small light source produces a hard sunlight-like effect. So with the view split we want to increase its size to get a softer effect. Expand the light source size way up and you'll see the shadow of the donut getting much softer.
 
 Try a _Size_ of 0.45m and a slightly reduced _Power_ of 330W.
 
@@ -642,9 +644,9 @@ Andrew did split testing and found people preferred pink-on-pink, so try changin
 
 ### Reducing noise
 
-As noted way above, whenever you change something, you'll see the _Path Tracing Sample_ counting up to 32 as Blender gradually rerenders the view. If you go to _Render Properties_, under _Sampling_, you'll see this 32 as the _Viewport_ value and also see 128 as the value used for high quality renders. This affects how noisy things appear and even at 128 samples you still some noise in the high quality render - but upping it further, e.g. to 256, gets very expensive time-wise and doesn't completely resolve the problem anyway.
+As noted way above, whenever you change something, you'll see the _Path Tracing Sample_ counting up to 32 as Blender gradually re-renders the view. If you go to _Render Properties_, under _Sampling_, you'll see this 32 as the _Viewport_ value and also see 128 as the value used for high quality renders. This affects how noisy things appear and even at 128 samples you still some noise in the high quality render - but upping it further, e.g. to 256, gets very expensive time-wise and doesn't completely resolve the problem anyway.
 
-Instead it's better to use a denoiser. Go to _Layer Properties_ and tick _Denoising Data_:
+Instead, it's better to use a denoiser. Go to _Layer Properties_ and tick _Denoising Data_:
 
 ![img.png](denoising-data.png)
 
@@ -659,7 +661,7 @@ Then we need to switch from the normal _Layout_ workspace to the _Compositing_ w
 Andrew says compositing and nodes will be covered properly later. For the moment, we'll just apply a mechanical set of steps to apply denoising to the image _after_ it's been rendered (i.e. denoising isn't part of the render itself). So the steps are:
 
 * `shift-A` to bring up the _Add Node_ menu, go to _Filter_ and select _Denoise_.
-* Drag things around such that the new node is between the _Render Layers_ node and the the _Composite_ node.
+* Drag things around such that the new node is between the _Render Layers_ node and the _Composite_ node.
 * Click on the yellow disc to the left of _Noisy Image_ (on the _Render Layers_ node) and drag from it to _Image_ on the _Denoise_ node.
 * Similarly, connect _Denoising Normal_ to _Nornal_ and _Denoising Depth_ to _Depth_.
 * Connect _Image_ on the _Denoise_ node to _Image_ on the _Composite_ node (this will break the existing link to _Image_ on the _Render Layers_ node).
@@ -668,7 +670,7 @@ Andrew says compositing and nodes will be covered properly later. For the moment
 
 Andrew goes into how you can get this new node layout to be applied to an existing render - something which would be very important if you wanted to try out things with an existing render without incurring the cost of a new render each time.
 
-But the easiest things, is to just rerender (with `F12`) - you'll see the noisy render occur just as before but then once its completed the denoise step is applied and the noise very suddenly disappears.
+But the easiest things, is to just re-render (with `F12`) - you'll see the noisy render occur just as before but then once its completed the denoise step is applied and the noise very suddenly disappears.
 
 
 ### Applying changes to an existing render
@@ -683,7 +685,7 @@ And change the linked image to _Render Result_:
 
 ![img.png](menu-render-result.png)
 
-Look at the render result, if you've already rerendered (as suggested above) then you have a nice denoised image. So try connecting the _Image_ output of the _Render Layers_ node to the _Image_ input of the _Composite_ node (so breaking the link to the _Denoise_ node) and you'll see the result instantly update to the noisy version. Then reconnect the _Image_ output of the _Denoise_ node and after a few seconds, you'll see the denoised version again.
+Look at the render result, if you've already re-rendered (as suggested above) then you have a nice denoised image. So try connecting the _Image_ output of the _Render Layers_ node to the _Image_ input of the _Composite_ node (so breaking the link to the _Denoise_ node) and you'll see the result instantly update to the noisy version. Then reconnect the _Image_ output of the _Denoise_ node and after a few seconds, you'll see the denoised version again.
 
 Note: you can maximize the area with the render result with `ctrl-space` - this maximizes the area that the mouse is currently over - and just press `ctrl-space` again to change things back to normal.
 

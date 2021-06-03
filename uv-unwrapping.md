@@ -1,7 +1,7 @@
 UV maps and UV unwrapping
 =========================
 
-First - UV maps and unwrapping are much simpler than it initially seems. Just stick with it for a while and you'll quickly reach a point where it all seems fairly obvious. We already briefly came across "UV" when adding the first _UV Sphere_.
+First - UV maps and unwrapping are much simpler than it initially seems. Just stick with it for a while and you'll quickly reach a point where it all seems fairly obvious. We already briefly came across the term _UV_ when adding the first _UV Sphere_.
 
 A UV map determines how a 2D image is mapped onto a 3D object (and vice-versa - if your 3D object's surface is mapped to a 2D image and you paint directly onto the 3D object then the UV map will determine how that appears on the flat 2D image).
 
@@ -15,7 +15,7 @@ Andrew uses this example:
 
 A set of seams need to be specified for your 3D object such that it can be cut open and laid flat (think of the edges of a cereal packet that you'd cut along so that you could lay it out flat). Once laid out flat, the faces of your original 3D object will have corresponding faces in the flat UV map.
 
-You can also thing of this process as taking the surface of the object and, making the minimum number of cuts, pealing it off and laying it down flat, i.e _unwrapping_ the object.
+You can also think of this process as taking the surface of the object and, making the minimum number of cuts, pealing it off and laying it down flat, i.e _unwrapping_ the object.
 
 If the UV map is laid out over an image then the area of the image covered by a particular face of the map will be mapped to the corresponding face of the 3D object.
 
@@ -143,19 +143,37 @@ This is simple to resolve - in the _3D Viewport_, just select all with `a`, then
 
 As well as changing the size of faces in the _3D Viewport_, try changing them in the _UV Editor_ and see how things update in the _3D Viewport_.
 
-Note: if you apply transformations, e.g. scaling, to an object, it _may_ be that, even after re-unwrapping an object, the sizes don't match up. To see the transformations for the current object, `tab` into _Object Mode_ in the _3D Viewport_, press `n` to pop-out the side menu and see if e.g. any of the scale values are not 1:
-
 Once, you've got the checker pattern associated with the object, via an _Image Texture_, you can actually unlink it in the _UV Editor_, if you find it distracting when working with the UV faces (just press the x icon, to the right of the image field, in the menu bar of the _UV Editor_). You can even use a different image in the _UV Editor_ - what matters for the object is the image configured in the _Image Texture_ node.
 
-![img.png](transform-values.png)
-
-For me, using `s` didn't affect these values - i.e. they stayed at 1 and I didn't have to take any additional steps.
-
-If this is an issue, then go to the _Object_ menu in the _3D Viewport_, then to _Apply_ (or just press `ctrl-A`) and select _All Transforms_ (or e.g. just _Scale_ if its the only issue).
+UV sync selection
+-----------------
 
 Sometimes, it can be inconvenient that faces disappear in the _UV Editor_ if they're not selected in the _3D Viewport_. To turn this off and at the same time enable selecting faces in the _UV Editor_ such that you can see them selected in the _3D Viewport_, click _UV Sync Selection_ (the two-way-arrows icon):
 
 ![img.png](uv-selection-sync.png)
+
+Scaling
+-------
+
+Sometimes, you can end up with scaling being applied to your object. E.g. if you add a cube, it always starts as 2m<sup>3</sup>. Then depending on how you manipulate it you may adjust its dimensions directly or you may simply apply a scale to them.
+
+Add a cube and pop out the side menu, then in the _Item_ tab enter 243mm, 83mm and 341mm as the x, y and z dimensions (these are the dimensions of the cereal box seen down below). What this does is apply a scaling to the sides of the 2m<sup>3</sup> cube:
+
+![img_1.png](scaling.png)
+
+In the screenshot above, you can see the dimensions (0.243m etc.) but these are actually achieved by applying a scale value, e.g. 0.122 for _X_ (2m * 0.122 = 0.244m).
+
+If you then mark your desired seams and unwrap the object, you'll see something strange - it uses the unscaled dimensions, i.e. it unwraps the 2m<sup>3</sup> cube:
+
+![img.png](unwrap-scale-warning.png)
+
+If you look carefully at the status bar above, you'll see that it actually warns you about this issue.
+
+Note: I find it odd that it warns you about this but if you forget to mark any seams (and just assume it'll use the implicit seams that were used for the default UV map) then there's no warning - it just does nothing (leaving you with the unchanged default UV map).
+
+If you notice as odd mismatch between the size of things in the UV map relative to the object then this is probably the issue. To resolve it, `tab` to _Object Mode_ and select _Apply_ under the _Object_ menu in the _3D viewport_ (or just press `ctrl-A`) and select _All Transforms_ (or e.g. just _Scale_ if it's the only issue). Then `tab` back to _Edit Mode_, select all vertices with `a` and then `u` and _Unwrap_. You end up with something more like you'd expect:
+
+![img.png](unwrap-scaling-applied.png)
 
 Mapping an existing image onto a 3D object
 ------------------------------------------
@@ -176,7 +194,7 @@ The result is very cool for something so simple.
 
 Aside: I find that video very good but I find the way he cuts up his shapes quite odd - he doesn't seem to think about how he'd cut up an actual box to get the flat shape he wants, instead he seems to pick edges _almost_ at random until he gets things kind of as he wants and then does unnecessary extra work in the _UV Editor_ to get closer to what he wants while still ending up with unnecessary islands (i.e. faces floating free from the others). I could create seams in one go for the simple layout seen above with no separate islands.
 
-Note: in the video, the presenter fills the background of the image with black rather than leaving it transparent. I suspect this may be a good idea if you want to be able to easily see points on the resulting object where the image hasn't folded as expected onto it. If that's the intention, it might be better to use an even more noticeable color, e.g. bright blue in this case that contrasts very strongly with the rest of the image.
+Note: in the video, the presenter fills the background of the image with black rather than leaving it transparent. I suspect this may be a good idea if you don't want odd transparent areas on your object where the image doesn't quite line up with your UV map. If you wanted to draw attention to such areas (such that you could correct them) it might be useful to use a far more noticeable color, e.g. bright blue in this case, that contrasts very strongly with the rest of the image.
 
 And finally, a high-quality render:
 

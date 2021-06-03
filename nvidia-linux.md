@@ -131,7 +131,7 @@ I found that this worked but that Blender wasn't entirely happy afterward - I ha
 
 As noted in the link above, you could combine these steps into a script that's run when the system wakes - but it's a rather blunt tool - I suspect any application may be unhappy at this happening while its running.
 
-You can find scripts, like this [one](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-340419774), that get around this by killing all processes using the Nvidia drvier _before_ going to sleep. But this will only really work if you've got a GPU dedicated to CUDA. In my setup, the GPU is also handling X:
+You can find scripts, like this [one](https://github.com/tensorflow/tensorflow/issues/5777#issuecomment-340419774), that get around this by killing all processes using the Nvidia driver _before_ going to sleep. But this will only really work if you've got a GPU dedicated to CUDA. In my setup, the GPU is also handling X:
 
     $ nvidia-smi pmon -c 1
     # gpu        pid  type    sm   mem   enc   dec   command
