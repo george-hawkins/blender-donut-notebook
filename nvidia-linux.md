@@ -12,6 +12,7 @@ However, even if you opted to install these drivers when setting up your system 
 
 So get `apt` up-to-date and then list the latest available drivers:
 
+    $ sudo apt update 
     $ sudo apt full-upgrade
     $ ubuntu-drivers devices
     == /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0 ==
@@ -48,6 +49,13 @@ That it fails due to "unmet dependencies" seems quite a common problem - people 
     $ sudo apt install nvidia-driver-460
 
 Note that the `purge` generates a huge amount of output but in the end really just seems to remove the Nvidia related drivers. At this point the system is in a rather strange state (the display still works but any Nvidia tools fail to detect the current driver). So reboot the system.
+
+**Update:** I've had the system continuously fail to wake from suspend and the issue turned out to be that for whatever reason the system had switched back to the non-proprietary driver. I thought I'd have to reinstall the driver, somewhat as above, but all that was necessary was:
+
+    $ sudo apt update 
+    $ sudo apt full-upgrade
+
+It was clear from the `full-upgrade` output that the kernel was being rebuilt with the proprietary Nvidia driver and after rebooting everything worked fine again.
 
 Versions
 --------

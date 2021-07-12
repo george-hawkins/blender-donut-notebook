@@ -404,7 +404,7 @@ When you add a new shape, it's the location of the 3D cursor that determines whe
 
 That's just for information - we're going to add a new shape but we don't need to move the 3D cursor for this.
 
-We're going to add a plane for the donut to sit on - so that we can see the shadow cast by the donut on something else, to make things more interesting. So `shift-A` and select _Plane from the _Mesh_ menu.
+We're going to add a plane for the donut to sit on - so that we can see the shadow cast by the donut on something else, to make things more interesting. So `shift-A` and select _Plane_ from the _Mesh_ menu.
 
 ![img.png](plane.png)
 
@@ -450,7 +450,11 @@ Above, you can see _Device_ is set to _CPU_. If you've got a decent graphics car
 
 If you've got a super new Nvidia RTX graphics card then it should be selected under the OptiX tab rather than _CUDA_ and if you've got an AMD graphics card then it should be selected under _OpenCL_.
 
-**Update:** I eventually bought an RTX card and initially didn't have it chosen under the OptiX tab. Switching to OptiX had a dramatic positive effect on my render times but the first time I did a render, I thought Blender had hung. Instead of rendering, it sat and did nothing but if you look closely, in the render window, you can see the text "Loading render kernels (may take a few minutes the first time)". It took less than a minute, for me, and more than made up for it in render speed afterwards.
+**Update:** I eventually bought an RTX card and initially didn't have it chosen under the OptiX tab. Switching to OptiX had a dramatic positive effect on my render times but the first time I did a render, I thought Blender had hung. Instead of rendering, it sat and did nothing but if you look closely, in the render window, you can see the text "Loading render kernels (may take a few minutes the first time)". It took several minutes, for me, and more than made up for it in render speed afterwards. Once the kernels have been loaded once they don't have to be reloaded even if you quit and restart Blender.
+
+TODO: however, if you reboot your machine, I think they then get reloaded - confirm if this is the case.
+
+**Update:** you can also select your CPU under the _CUDA_ or _OptiX_ tabs - on my system, a donut render, that took 35s without CPU being ticked, took 25s when the CPU also contributed. On Blender 2.93, I find it forgets the CPU setting everytime Blender is restarted. It's fairly clear if the CPU is contributing as you can see multiple tiles being rendered at the same time when you do high quality renders.
 
 If you haven't got either an Nvivida or an AMD graphics card then you just have to use _CPU_. My cheap Nvidia GT 730 card is barely faster than _CPU_ anyway.
 
